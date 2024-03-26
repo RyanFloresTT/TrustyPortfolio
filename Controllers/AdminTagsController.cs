@@ -5,7 +5,7 @@ using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Controllers {
     public class AdminTagsController(ITagRepository tagRepository) : Controller {
-        readonly ITagRepository tagRepo = tagRepository;
+        readonly ITagRepository tagRepository = tagRepository;
 
         [HttpGet]
         public IActionResult Add() {
@@ -21,7 +21,7 @@ namespace TrustyPortfolio.Controllers {
                 DisplayName = tagRequest.DisplayName
             };
 
-            await tagRepo.AddAsync(tag);
+            await tagRepository.AddAsync(tag);
 
             return RedirectToAction("List");
         }
@@ -30,14 +30,14 @@ namespace TrustyPortfolio.Controllers {
         [ActionName("List")]
         public async Task<IActionResult> List() {
             
-            var tags = await tagRepo.GetAllAsync();
+            var tags = await tagRepository.GetAllAsync();
 
             return View(tags); 
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id) {
-            var tag = await tagRepo.GetByGuidAsync(id);
+            var tag = await tagRepository.GetByGuidAsync(id);
 
             if (tag != null) {
                 var editTag = new EditTagRequest {
@@ -58,7 +58,7 @@ namespace TrustyPortfolio.Controllers {
                 DisplayName = editRequest.DisplayName
             };
 
-            var updatedTag = await tagRepo.UpdateAsync(tag);
+            var updatedTag = await tagRepository.UpdateAsync(tag);
 
             if (updatedTag != null) {
                 // Show Success Notification
@@ -70,7 +70,7 @@ namespace TrustyPortfolio.Controllers {
         }
 
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) {
-            var tagToDelete = await tagRepo.DeleteAsync(editTagRequest.Id);
+            var tagToDelete = await tagRepository.DeleteAsync(editTagRequest.Id);
 
             if (tagToDelete != null) {
                 // Show Succss Notification

@@ -11,6 +11,7 @@ builder.Services.AddDbContext<PortfolioDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PortfolioDbConnectionString")));
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IBlogRepository, BlogPostRepository>();
 
 var app = builder.Build();
 
