@@ -1,4 +1,5 @@
-﻿using TrustyPortfolio.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TrustyPortfolio.Data;
 using TrustyPortfolio.Models.Domain;
 
 namespace TrustyPortfolio.Repositories {
@@ -11,20 +12,45 @@ namespace TrustyPortfolio.Repositories {
             return blogPost;
         }
 
-        public Task<BlogPost?> DeleteAsync(Guid id) {
-            throw new NotImplementedException();
+        public async Task<BlogPost?> DeleteAsync(Guid id) {
+            var blog = await db.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (blog != null) {
+                db.BlogPosts.Remove(blog);
+                await db.SaveChangesAsync();
+                return blog;
+            }
+            return null;
         }
 
-        public Task<IEnumerable<BlogPost>> GetAllAsync() {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<BlogPost>> GetAllAsync() {
+            return await db.BlogPosts.Include(x => x.Tags).ToListAsync();
         }
 
-        public Task<BlogPost?> GetByGuidAsync(Guid id) {
-            throw new NotImplementedException();
+        public async Task<BlogPost?> GetByGuidAsync(Guid id) {
+            return await db.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<BlogPost?> UpdateAsync(BlogPost blogPost) {
-            throw new NotImplementedException();
+        public async Task<BlogPost?> UpdateAsync(BlogPost blogPost) {
+            var existingBlog = await db.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+
+            if (existingBlog != null) {
+                existingBlog.Id = blogPost.Id;
+                existingBlog.Title = blogPost.Title;
+                existingBlog.Heading = blogPost.Heading;
+                existingBlog.Content = blogPost.Content;
+                existingBlog.FeaturedImageUrl = blogPost.FeaturedImageUrl;
+                existingBlog.UrlHandle = blogPost.UrlHandle;
+                existingBlog.Description = blogPost.Description;
+                existingBlog.PublishDate = blogPost.PublishDate;
+                existingBlog.Visible = blogPost.Visible;
+                existingBlog.Tags = blogPost.Tags;
+
+                await db.SaveChangesAsync();
+                return existingBlog;
+            }
+
+            return null;
         }
     }
 }
