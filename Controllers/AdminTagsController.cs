@@ -19,6 +19,10 @@ namespace TrustyPortfolio.Controllers {
         [ActionName("Add")]    
         public async Task<IActionResult> Add(AddTagRequest tagRequest) {
 
+            if (!ModelState.IsValid) {
+                return View();
+            }
+
             var tag = new Tag {
                 Name = tagRequest.Name,
                 DisplayName = tagRequest.DisplayName

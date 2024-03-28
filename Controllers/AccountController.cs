@@ -15,19 +15,23 @@ namespace TrustyPortfolio.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerRequest) {
-            var newUser = new IdentityUser {
-                UserName = registerRequest.Username,
-                Email = registerRequest.Email,
-            };
-            var userResult = await userManager.CreateAsync(newUser, registerRequest.Password);
 
-            if (userResult.Succeeded) {
-                var roleAssignedUesr = await userManager.AddToRoleAsync(newUser, "User");
-                if (roleAssignedUesr.Succeeded) {
-                    // Show success notification
-                    return RedirectToAction("Register");
+            if (ModelState.IsValid) {
+                var newUser = new IdentityUser {
+                    UserName = registerRequest.Username,
+                    Email = registerRequest.Email,
+                };
+                var userResult = await userManager.CreateAsync(newUser, registerRequest.Password);
+
+                if (userResult.Succeeded) {
+                    var roleAssignedUesr = await userManager.AddToRoleAsync(newUser, "User");
+                    if (roleAssignedUesr.Succeeded) {
+                        // Show success notification
+                        return RedirectToAction("Register");
+                    }
                 }
             }
+            
             // Show error notification
             return View();
         }
@@ -43,6 +47,10 @@ namespace TrustyPortfolio.Controllers {
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginRequest) {
 
+            if (!ModelState.IsValid) {
+                // Show error notification
+                return View();
+            }
 
             var result = await signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password, false, false);
 
