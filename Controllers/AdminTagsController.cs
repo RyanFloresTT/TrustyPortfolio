@@ -35,15 +35,28 @@ namespace TrustyPortfolio.Controllers {
 
         [HttpGet]
         [ActionName("List")]
-        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection) {
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1) {
+
+            var totalTags = await tagRepository.CountAsync();
+
+            var totalPages = Math.Ceiling((decimal)totalTags / pageSize);
+
+            if (pageNumber > totalPages) {
+                pageNumber = Convert.ToInt32(totalPages);
+            }
+            if (pageNumber < 1) {
+                pageNumber = 1;
+            }
 
             ViewBag.SearchQuery = searchQuery;
             ViewBag.SortBy = sortBy;
             ViewBag.SortDirection = sortDirection;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
 
 
-
-            var tags = await tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection);
+            var tags = await tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
 
             return View(tags); 
         }

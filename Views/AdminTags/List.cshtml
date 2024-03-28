@@ -1,5 +1,10 @@
 ﻿@model List<TrustyPortfolio.Models.Domain.Tag>
 
+@{
+    int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
+    int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
+}
+
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
         <h1>Show All Tags - Admin Functionality</h1>
@@ -94,6 +99,40 @@
                 }
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                               asp-controller="AdminTags"
+                               asp-action="List"
+                               asp-route-pageNumber="@prevPage"
+                               asp-route-pageSize="@ViewBag.PageSize">Previous</a></li>
+                @for (int i = 1; i < ViewBag.TotalPages + 1; i++) {
+                    <li class="page-item">
+                        <a class="page-link">
+                            <a class="page-link"
+                               asp-controller="AdminTags"
+                               asp-action="List"
+                               asp-route-pageNumber="@i"
+                               asp-route-pageSize="@ViewBag.PageSize"
+                               asp-route-sortDirection="@ViewBag.SortDirection"
+                               asp-route-sortBy="@ViewBag.SortBy"
+                            >@i</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a class="page-link"
+                               asp-controller="AdminTags"
+                               asp-action="List"
+                               asp-route-pageNumber="@nextPage"
+                               asp-route-pageSize="@ViewBag.PageSize"
+                               asp-route-sortDirection="@ViewBag.SortDirection"
+                               asp-route-sortBy="@ViewBag.SortBy">Next</a>
+                </li>
+            </ul>
+        </nav>
+
     } else {
         <p>No Tags Found!</p>
     }

@@ -13,6 +13,10 @@ namespace TrustyPortfolio.Repositories {
             return tag;
         }
 
+        public async Task<int> CountAsync() {
+            return await db.Tags.CountAsync();
+        }
+
         public async Task<Tag?> DeleteAsync(Guid id) {
             var tagToDelete = await db.Tags.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -26,7 +30,12 @@ namespace TrustyPortfolio.Repositories {
             return null;
         }
 
-        public async Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery = null, string? sortBy = null, string? sortDirection = null) {
+        public async Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery = null,
+            string? sortBy = null,
+            string? sortDirection = null,
+            int pageNumber = 1,
+            int pageSize = 100
+            ) {
             
             var query = db.Tags.AsQueryable();
 
@@ -46,10 +55,11 @@ namespace TrustyPortfolio.Repositories {
                 if (string.Equals(sortBy, "DisplayName", StringComparison.OrdinalIgnoreCase)) {
                     query = isDesc ? query.OrderByDescending(x => x.DisplayName) : query.OrderBy(x => x.DisplayName);
                 }
-
-                // Pagination
-
             }
+
+            // Pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+            query = query.Skip(skipResults).Take(pageSize);
 
             return await query.ToListAsync();
         }
