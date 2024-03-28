@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TrustyPortfolio.Models;
+using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Controllers {
-    public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
+    public class HomeController(ILogger<HomeController> logger, IBlogRepository blogPostRepository) : Controller {
+        readonly ILogger<HomeController> _logger = logger;
+        readonly IBlogRepository blogPostRepository = blogPostRepository;
 
-        public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
-        }
-
-        public IActionResult Index() {
-            return View();
+        public async Task<IActionResult> Index() {
+            var blogPosts = await blogPostRepository.GetAllAsync();
+            return View(blogPosts);
         }
 
         public IActionResult Privacy() {
