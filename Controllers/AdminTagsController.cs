@@ -35,9 +35,15 @@ namespace TrustyPortfolio.Controllers {
 
         [HttpGet]
         [ActionName("List")]
-        public async Task<IActionResult> List() {
-            
-            var tags = await tagRepository.GetAllAsync();
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection) {
+
+            ViewBag.SearchQuery = searchQuery;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDirection = sortDirection;
+
+
+
+            var tags = await tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection);
 
             return View(tags); 
         }

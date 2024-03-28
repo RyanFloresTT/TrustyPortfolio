@@ -26,9 +26,32 @@ namespace TrustyPortfolio.Repositories {
             return null;
         }
 
-        public async Task<IEnumerable<Tag>> GetAllAsync() {
-            var tags = await db.Tags.ToListAsync();
-            return tags;
+        public async Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery = null, string? sortBy = null, string? sortDirection = null) {
+            
+            var query = db.Tags.AsQueryable();
+
+            // Filter
+            if (!string.IsNullOrWhiteSpace(searchQuery)) {
+                query = query.Where(x => x.Name.Contains(searchQuery) || 
+                                        x.DisplayName.Contains(searchQuery));
+            }
+            
+            // Sort
+            if (!string.IsNullOrWhiteSpace(sortBy)) {
+                var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+                if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase)) {
+                    query = isDesc ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name);
+                }
+                if (string.Equals(sortBy, "DisplayName", StringComparison.OrdinalIgnoreCase)) {
+                    query = isDesc ? query.OrderByDescending(x => x.DisplayName) : query.OrderBy(x => x.DisplayName);
+                }
+
+                // Pagination
+
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Tag?> GetByGuidAsync(Guid id) {
