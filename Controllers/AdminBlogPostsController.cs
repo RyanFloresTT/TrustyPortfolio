@@ -48,7 +48,6 @@ namespace TrustyPortfolio.Controllers {
                     selectedTags.Add(existingTag);
                 }
             }
-
             blogPost.Tags = selectedTags;
 
             await blogPostRepository.AddAsync(blogPost);
