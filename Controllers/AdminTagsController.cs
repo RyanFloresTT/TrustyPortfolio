@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Models.ViewModels;
 using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Controllers {
+    [Authorize(Roles = "Admin")]
     public class AdminTagsController(ITagRepository tagRepository) : Controller {
         readonly ITagRepository tagRepository = tagRepository;
 
+        
         [HttpGet]
         public IActionResult Add() {
             return View();

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Models.ViewModels;
 using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Controllers {
+    [Authorize(Roles = "Admin")]
     public class AdminBlogPostsController(ITagRepository tagRepository, IBlogRepository blogPostRepository) : Controller {
         readonly ITagRepository tagRepository = tagRepository;
         readonly IBlogRepository blogPostRepository = blogPostRepository;
