@@ -87,12 +87,12 @@ namespace TrustyPortfolio.Controllers {
             var updatedTag = await tagRepository.UpdateAsync(tag);
 
             if (updatedTag != null) {
-                // Show Success Notification
+                ViewBag.SuccessMessage = "Tag updated successfully!";
             } else {
-                // Show Error Notification
+                ViewBag.ErrorMessage = "Failed to update tag.";
             }
 
-            return RedirectToAction("Edit", new { id = editRequest.Id });
+            return RedirectToAction("List", new { id = editRequest.Id });
         }
 
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) {

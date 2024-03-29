@@ -8,5 +8,6 @@ namespace TrustyPortfolio.Data {
         
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }

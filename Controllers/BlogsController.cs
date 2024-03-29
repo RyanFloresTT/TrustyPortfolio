@@ -9,5 +9,10 @@ namespace TrustyPortfolio.Controllers {
             var blogPost = await blogRepository.GetByUrlHandleAsync(urlHandle);
             return View(blogPost);
         }
+        [HttpGet]
+        public async Task<IActionResult> List() {
+            var blogs = await blogRepository.GetAllAsync();
+            return View(blogs);
+        }
     }
 }
