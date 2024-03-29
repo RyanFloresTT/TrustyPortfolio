@@ -7,9 +7,9 @@ namespace TrustyPortfolio.Repositories {
     public class CloudinaryImageRepository (IConfiguration config) : IImageRepository {
         readonly IConfiguration config = config;
         readonly Account cloudinaryAccount = new(
-            config.GetSection("Cloudinary")["CloudName"],
-            config.GetSection("Cloudinary")["ApiKey"],
-            config.GetSection("Cloudinary")["ApiSecret"]);
+            config["Cloudinary:CloudName"],
+            config["Cloudinary:ApiKey"],
+            config["Cloudinary:ApiSecret"]);
 
         public async Task<string> UploadAsync(IFormFile file) {
             var client = new Cloudinary(cloudinaryAccount);
