@@ -9,6 +9,25 @@
         <div class="col-6">
             @if (Model != null && Model.Any()) {
                 foreach (var project in Model) {
+                    @if (project.Visible && project.Featured) {
+                        <div class="card mb-3">
+                            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-header">@project.Heading</div>
+                                <div class="card-body">
+                                    <h4 class="card-title">@project.Title</h4>
+                                    <p class="card-text">@project.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (Model != null && Model.Any()) {
+                foreach (var project in Model) {
                     @if (project.Visible && !project.Featured) {
                         <div class="card mb-3">
                             <h3 class="card-header">@project.Heading</h3>
