@@ -58,10 +58,30 @@ namespace TrustyPortfolio.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> List() {
-            var blogs = await blogPostRepository.GetAllAsync();
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1) {
 
-            return View(blogs);
+            var totalTags = await blogPostRepository.CountAsync();
+
+            var totalPages = Math.Ceiling((decimal)totalTags / pageSize);
+
+            if (pageNumber > totalPages) {
+                pageNumber = Convert.ToInt32(totalPages);
+            }
+            if (pageNumber < 1) {
+                pageNumber = 1;
+            }
+
+            ViewBag.SearchQuery = searchQuery;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDirection = sortDirection;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+
+
+            var tags = await blogPostRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+            return View(tags);
         }
 
         [HttpGet]

@@ -22,9 +22,38 @@ namespace TrustyPortfolio.Repositories {
             }
             return null;
         }
+        public async Task<int> CountAsync() {
+            return await db.Tags.CountAsync();
+        }
 
-        public async Task<IEnumerable<BlogPost>> GetAllAsync() {
-            return await db.BlogPosts.Include(x => x.Tags).ToListAsync();
+        public async Task<IEnumerable<BlogPost>> GetAllAsync(string? searchQuery = null,
+            string? sortBy = null,
+            string? sortDirection = null,
+            int pageNumber = 1, 
+            int pageSize = 100
+            ) {
+
+            var query = db.BlogPosts.AsQueryable();
+
+            // Filter
+            if (!string.IsNullOrWhiteSpace(searchQuery)) {
+                query = query.Where(x => x.Title.Contains(searchQuery));
+            }
+
+            // Sort
+            if (!string.IsNullOrWhiteSpace(sortBy)) {
+                var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+                if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase)) {
+                    query = isDesc ? query.OrderByDescending(x => x.Title) : query.OrderBy(x => x.Title);
+                }
+            }
+
+            // Pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+            query = query.Skip(skipResults).Take(pageSize);
+
+            return await query.Include(x => x.Tags).ToListAsync();
         }
 
         public async Task<BlogPost?> GetByGuidAsync(Guid id) {
@@ -35,6 +64,10 @@ namespace TrustyPortfolio.Repositories {
             return await db.BlogPosts
                 .Include(x => x.Tags)
                 .FirstOrDefaultAsync(x =>x.UrlHandle == urlHandle);
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetFeaturedAsync() {
+            return await db.BlogPosts.Include(x => x.Tags).Where(x => x.Featured).ToListAsync();
         }
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost) {

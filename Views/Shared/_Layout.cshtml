@@ -28,7 +28,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Blogs" asp-action="List">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Projects</a>
+                            <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="List">Projects</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Hello World!</a>
@@ -41,8 +41,12 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="Add">New Tag</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="List">All Tags</a>
+                                    <br />
                                     <a class="dropdown-item" asp-area="" asp-controller="AdminBlogPosts" asp-action="Add">New Blog Post</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="AdminBlogPosts" asp-action="List">All Blog Posts</a>
+                                    <br />
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminProjects" asp-action="Add">New Project</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminProjects" asp-action="List">All Projects</a>
                                 </div>
                             </li>
                         }

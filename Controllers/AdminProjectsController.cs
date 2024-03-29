@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TrustyPortfolio.Models.Domain;
@@ -17,11 +16,16 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Add() {
             // Get Tags from Repository
             var tags = await tagRepository.GetAllAsync();
+            var blogs = await blogRepository.GetAllAsync();
 
             var model = new AddProjectRequest {
                 Tags = tags.Select(x => new SelectListItem {
                     Text = x.DisplayName,
                     Value = x.Id.ToString(),
+                }),
+                Blogs = blogs.Select(x => new SelectListItem {
+                    Text = x.Title,
+                    Value = x.Id.ToString()
                 })
             };
 
@@ -31,7 +35,7 @@ namespace TrustyPortfolio.Controllers {
         [HttpPost]
         public async Task<IActionResult> Add(AddProjectRequest projectRequest) {
 
-            var blogPost = new Project {
+            var newProject = new Project {
                 Heading = projectRequest.Heading,
                 Title = projectRequest.Title,
                 Content = projectRequest.Content,
@@ -54,7 +58,7 @@ namespace TrustyPortfolio.Controllers {
                 }
             }
 
-            blogPost.Tags = selectedTags;
+            newProject.Tags = selectedTags;
 
             var selectedBlogs = new List<BlogPost>();
 
@@ -68,59 +72,89 @@ namespace TrustyPortfolio.Controllers {
 
             }
 
-            blogPost.Blogs = selectedBlogs;
+            newProject.Blogs = selectedBlogs;
 
-            await projectRepository.AddAsync(blogPost);
+            await projectRepository.AddAsync(newProject);
 
             return RedirectToAction("Add");
         }
 
         [HttpGet]
-        public async Task<IActionResult> List() {
-            var blogs = await projectRepository.GetAllAsync();
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1) {
 
-            return View(blogs);
+            var totalTags = await projectRepository.CountAsync();
+
+            var totalPages = Math.Ceiling((decimal)totalTags / pageSize);
+
+            if (pageNumber > totalPages) {
+                pageNumber = Convert.ToInt32(totalPages);
+            }
+            if (pageNumber < 1) {
+                pageNumber = 1;
+            }
+
+            ViewBag.SearchQuery = searchQuery;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDirection = sortDirection;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+
+
+            var tags = await projectRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+            return View(tags);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id) {
-            var blog = await projectRepository.GetByGuidAsync(id);
+            var project = await projectRepository.GetByGuidAsync(id);
             var tags = await tagRepository.GetAllAsync();
+            var blogs = await blogRepository.GetAllAsync();
 
-            if (blog != null) {
+            if (project != null) {
 
-                var model = new EditBlogPostRequest {
-                    Id = blog.Id,
-                    Heading = blog.Heading,
-                    Title = blog.Title,
-                    Content = blog.Content,
-                    FeaturedImageUrl = blog.FeaturedImageUrl,
-                    UrlHandle = blog.UrlHandle,
-                    Description = blog.Description,
-                    PublishDate = blog.PublishDate,
-                    Visible = blog.Visible,
+                var model = new EditProjectRequest {
+                    Id = project.Id,
+                    Heading = project.Heading,
+                    Title = project.Title,
+                    Content = project.Content,
+                    FeaturedImageUrl = project.FeaturedImageUrl,
+                    UrlHandle = project.UrlHandle,
+                    ProjectUrl = project.ProjectUrl,
+                    Description = project.Description,
+                    PublishDate = project.PublishDate,
+                    Visible = project.Visible,
+                    Featured = project.Featured,
                     Tags = tags.Select(x => new SelectListItem {
                         Text = x.Name,
                         Value = x.Id.ToString()
                     }),
-                    SelectedTags = blog.Tags.Select(x => x.Id.ToString()).ToArray()
+                    Blogs = blogs.Select(x => new SelectListItem {
+                        Text = x.Title,
+                        Value = x.Id.ToString()
+                    }),
+                    SelectedTags = project.Tags.Select(x => x.Id.ToString()).ToArray(),
+                    SelectedBlogs = project.Blogs.Select(x => x.Id.ToString()).ToArray()
                 };
                 return View(model);
             }
             return View(null);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(EditBlogPostRequest editRequest) {
-            var blog = new BlogPost {
+        public async Task<IActionResult> Edit(EditProjectRequest editRequest) {
+            var project = new Project {
                 Id = editRequest.Id,
                 Title = editRequest.Title,
                 Heading = editRequest.Heading,
                 Content = editRequest.Content,
                 FeaturedImageUrl = editRequest.FeaturedImageUrl,
+                ProjectUrl = editRequest.ProjectUrl,
                 UrlHandle = editRequest.UrlHandle,
                 Description = editRequest.Description,
                 PublishDate = editRequest.PublishDate,
                 Visible = editRequest.Visible,
+                Featured = editRequest.Featured
             };
 
             var selectedTags = new List<Tag>();
@@ -133,9 +167,9 @@ namespace TrustyPortfolio.Controllers {
                 }
             }
 
-            blog.Tags = selectedTags;
+            project.Tags = selectedTags;
 
-            var updatedBlog = await projectRepository.UpdateAsync(blog);
+            var updatedBlog = await projectRepository.UpdateAsync(project);
 
             if (updatedBlog != null) {
                 // Show Success Notification
@@ -147,10 +181,10 @@ namespace TrustyPortfolio.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(EditBlogPostRequest editRequest) {
-            var deletedBlog = await projectRepository.DeleteAsync(editRequest.Id);
+        public async Task<IActionResult> Delete(EditProjectRequest editRequest) {
+            var deletedProject = await projectRepository.DeleteAsync(editRequest.Id);
 
-            if (deletedBlog != null) {
+            if (deletedProject != null) {
                 // Show Success 
                 return RedirectToAction("List");
             } else {

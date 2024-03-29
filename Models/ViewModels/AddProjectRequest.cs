@@ -11,6 +11,7 @@ namespace TrustyPortfolio.Models.ViewModels {
         public string ProjectUrl { get; set; }
         public DateTime PublishDate { get; set; } = DateTime.Now;
         public bool Visible { get; set; }
+        public bool Featured { get; set; }
 
         // Display Tags
         public IEnumerable<SelectListItem> Tags { get; set; }

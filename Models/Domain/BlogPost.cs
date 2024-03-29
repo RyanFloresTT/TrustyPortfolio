@@ -9,6 +9,7 @@
         public string UrlHandle { get; set; }
         public DateTime PublishDate { get; set; } = DateTime.Now;
         public bool Visible { get; set; }
+        public bool Featured { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
     }
