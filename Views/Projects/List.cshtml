@@ -1,0 +1,46 @@
+﻿@model List<TrustyPortfolio.Models.Domain.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (Model != null && Model.Any()) {
+                foreach (var project in Model) {
+                    @if (project.Visible && !project.Featured) {
+                        <div class="card mb-3">
+                            <h3 class="card-header">@project.Heading</h3>
+                            <div class="card-body">
+                                <h5 class="card-title">@project.Title</h5>
+                            </div>
+                            <img src="@project.FeaturedImageUrl" />
+                            <div class="card-body">
+                                <p class="card-text">@project.Description</p>
+                            </div>
+                            <div class="col-6 d-flex">
+                                @if (Model != null && project.Tags.Any()) {
+                                    @foreach (var tag in project.Tags) {
+                                        <span class="badge bg-primary ms-1">@tag.Name</span>
+                                    }
+                                } else {
+                                    <p>This is where I'd put the tags.... if this project had any!</p>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <a class="btn btn-primary card-link" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-urlHandle="@project.UrlHandle">Learn More</a>
+                                <a class="btn btn-primary card-link" target="_blank" href="@project.ProjectUrl">Live Link</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                @project.PublishDate.ToShortDateString()
+                            </div>
+                        </div>
+                    }
+                }
+            } else {
+                <p>Sorry, no projects were found!</p>
+            }
+        </div>
+    </div>
+</div>

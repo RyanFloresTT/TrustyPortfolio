@@ -83,6 +83,7 @@ namespace TrustyPortfolio.Repositories {
                 existingBlog.Description = blogPost.Description;
                 existingBlog.PublishDate = blogPost.PublishDate;
                 existingBlog.Visible = blogPost.Visible;
+                existingBlog.Featured = blogPost.Featured;
                 existingBlog.Tags = blogPost.Tags;
 
                 await db.SaveChangesAsync();

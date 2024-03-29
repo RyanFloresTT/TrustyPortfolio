@@ -87,6 +87,7 @@ namespace TrustyPortfolio.Repositories {
                 existingProject.Description = project.Description;
                 existingProject.PublishDate = project.PublishDate;
                 existingProject.Visible = project.Visible;
+                existingProject.Featured = project.Featured;
                 existingProject.Tags = project.Tags;
                 existingProject.Blogs = project.Blogs;
 

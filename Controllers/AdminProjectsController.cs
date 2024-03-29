@@ -45,6 +45,7 @@ namespace TrustyPortfolio.Controllers {
                 UrlHandle = projectRequest.UrlHandle,
                 PublishDate = projectRequest.PublishDate,
                 Visible = projectRequest.Visible,
+                Featured = projectRequest.Featured,
             };
 
             var selectedTags = new List<Tag>();

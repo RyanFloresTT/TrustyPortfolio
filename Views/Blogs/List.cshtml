@@ -9,31 +9,33 @@
         <div class="col-6">
             @if (Model != null && Model.Any()) {
                 foreach (var blogPost in Model) {
-                    <div class="card mb-3">
-                        <h3 class="card-header">@blogPost.Heading</h3>
-                        <div class="card-body">
-                            <h5 class="card-title">@blogPost.Title</h5>
-                        </div>
-                        <img src="@blogPost.FeaturedImageUrl"/>
-                        <div class="card-body">
-                            <p class="card-text">@blogPost.Description</p>
-                        </div>
-                        <div class="col-6 d-flex">
-                            @if (Model != null && blogPost.Tags.Any()) {
-                                @foreach (var tag in blogPost.Tags) {
-                                    <span class="badge bg-primary ms-1">@tag.Name</span>
+                    @if (blogPost.Visible && !blogPost.Featured) {
+                        <div class="card mb-3">
+                            <h3 class="card-header">@blogPost.Heading</h3>
+                            <div class="card-body">
+                                <h5 class="card-title">@blogPost.Title</h5>
+                            </div>
+                            <img src="@blogPost.FeaturedImageUrl" />
+                            <div class="card-body">
+                                <p class="card-text">@blogPost.Description</p>
+                            </div>
+                            <div class="col-6 d-flex">
+                                @if (Model != null && blogPost.Tags.Any()) {
+                                    @foreach (var tag in blogPost.Tags) {
+                                        <span class="badge bg-primary ms-1">@tag.Name</span>
+                                    }
+                                } else {
+                                    <p>This is where I'd put the tags.... if this post had any!</p>
                                 }
-                            } else {
-                                <p>This is where I'd put the tags.... if this post had any!</p>
-                            }
+                            </div>
+                            <div class="card-body">
+                                <a class="btn btn-primary card-link" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                @blogPost.PublishDate.ToShortDateString()
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <a class="btn btn-primary card-link" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            @blogPost.PublishDate.ToShortDateString()
-                        </div>
-                    </div>  
+                    }
                 }
             } else {
                 <p>Sorry, no posts were found!</p>

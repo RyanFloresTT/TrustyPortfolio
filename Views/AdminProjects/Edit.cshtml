@@ -1,8 +1,8 @@
-﻿@model TrustyPortfolio.Models.ViewModels.EditBlogPostRequest
+﻿@model TrustyPortfolio.Models.ViewModels.EditProjectRequest
 
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
-        <h1>Edit Blog Post - Admin Functionality</h1>
+        <h1>Edit Project - Admin Functionality</h1>
     </div>
 </div>
 
@@ -11,7 +11,7 @@
         <form method="post" class="">
             <div class="mb-3">
                 <label class="form-label">Id</label>
-                <input type="text" class="form-control" id="id" asp-for="Id" readonly/>
+                <input type="text" class="form-control" id="id" asp-for="Id" readonly />
             </div>
             <div class="mb-3">
                 <label class="form-label">Heading</label>
@@ -43,6 +43,10 @@
                 <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
             </div>
             <div class="mb-3">
+                <label class="form-label">Project URL</label>
+                <input type="text" class="form-control" id="projectUrl" asp-for="ProjectUrl" />
+            </div>
+            <div class="mb-3">
                 <label class="form-label">URL Handle</label>
                 <input type="text" class="form-control" id="urlHandle" asp-for="UrlHandle" />
             </div>
@@ -63,13 +67,18 @@
                 <select class="form-select" asp-items="@Model.Tags" asp-for="SelectedTags">
                 </select>
             </div>
+            <div class="mb-3">
+                <label class="form-label">Related Blogs</label>
+                <select class="form-select" asp-items="@Model.Blogs" asp-for="SelectedBlogs">
+                </select>
+            </div>
             <div class="mb-3 d-flex">
                 <button type="submit" class="btn btn-dark me-2">Save</button>
-                <button type="submit" class="btn btn-danger me-2" asp-area="" asp-controller="AdminBlogPosts" asp-action="Delete">Delete</button>
+                <button type="submit" class="btn btn-danger me-2" asp-area="" asp-controller="AdminProjects" asp-action="Delete">Delete</button>
             </div>
         </form>
     } else {
-        <p>No Blog Post Found!</p>
+        <p>No Project Post Found!</p>
     }
 </div>
 

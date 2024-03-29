@@ -38,6 +38,7 @@ namespace TrustyPortfolio.Controllers {
                 UrlHandle = blogPostRequest.UrlHandle,
                 PublishDate = blogPostRequest.PublishDate,
                 Visible = blogPostRequest.Visible,
+                Featured = blogPostRequest.Featured,
             };
 
             var selectedTags = new List<Tag>();
@@ -101,6 +102,7 @@ namespace TrustyPortfolio.Controllers {
                     Description = blog.Description,
                     PublishDate = blog.PublishDate,
                     Visible = blog.Visible,
+                    Featured = blog.Featured,
                     Tags = tags.Select(x => new SelectListItem {
                         Text = x.Name,
                         Value = x.Id.ToString()
@@ -123,6 +125,7 @@ namespace TrustyPortfolio.Controllers {
                 Description = editRequest.Description,
                 PublishDate = editRequest.PublishDate,
                 Visible = editRequest.Visible,
+                Featured = editRequest.Featured,
             };
 
             var selectedTags = new List<Tag>();
