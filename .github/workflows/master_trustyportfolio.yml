@@ -22,10 +22,13 @@ jobs:
           dotnet-version: '8.0'
           include-prerelease: true
 
-      - name: Restore dependencies, build, and run tests
+      - name: Restore dependencies and build
         run: |
           dotnet restore
           dotnet build --configuration Release
+
+      - name: Run tests
+        run: |
           dotnet test --configuration Release --logger trx --output test-results
 
       - name: dotnet publish
