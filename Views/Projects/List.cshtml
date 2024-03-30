@@ -4,31 +4,35 @@
     ViewData["Title"] = "Projects";
 }
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-6">
-            @if (Model != null && Model.Any()) {
-                foreach (var project in Model) {
-                    @if (project.Visible && project.Featured) {
+<!--
+
+SMALL CARD
+
+
                         <div class="card mb-3">
                             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-                                <div class="card-header">@project.Heading</div>
+                                <div class="card-header">project.Heading</div>
                                 <div class="card-body">
-                                    <h4 class="card-title">@project.Title</h4>
-                                    <p class="card-text">@project.Description</p>
+                                    <h4 class="card-title">project.Title</h4>
+                                    <p class="card-text">project.Description</p>
                                 </div>
                             </div>
                         </div>
-                    }
-                }
-            }
+
+
+-->
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h2 class="text-center">Featured Projects</h2>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-6">
             @if (Model != null && Model.Any()) {
                 foreach (var project in Model) {
-                    @if (project.Visible && !project.Featured) {
+                    @if (project.Visible && project.Featured) {
                         <div class="card mb-3">
                             <h3 class="card-header">@project.Heading</h3>
                             <div class="card-body">
@@ -57,9 +61,36 @@
                         </div>
                     }
                 }
-            } else {
-                <p>Sorry, no projects were found!</p>
             }
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 mt-4 mb-4">
+            <h2 class="text-center">Explore More Projects</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="row">
+                @if (Model != null && Model.Any()) {
+                    @foreach (var project in Model) {
+                        @if (project.Visible && !project.Featured) {
+                            <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                                <div class="card text-white bg-primary mb-3">
+                                    <div class="card-header">@project.Heading</div>
+                                    <div class="card-body">
+                                        <h4 class="card-title">@project.Title</h4>
+                                        <p class="card-text">@project.Description</p>
+                                    </div>
+                                </div>
+                                <a class="btn btn-outline-primary card-link" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-urlHandle="@project.UrlHandle">Read More</a>
+                            </div>
+                        }
+                    }
+                } else {
+                    <p>Sorry, no posts were found!</p>
+                }
+            </div>
         </div>
     </div>
 </div>
