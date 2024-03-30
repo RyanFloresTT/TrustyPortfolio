@@ -1,40 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
 using TrustyPortfolio.Models.ViewModels;
 
 namespace TrustyPortfolio.Controllers {
-    public class AccountController (UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) : Controller {
-        readonly UserManager<IdentityUser> userManager = userManager;
+    public class AccountController (SignInManager<IdentityUser> signInManager) : Controller {
         readonly SignInManager<IdentityUser> signInManager = signInManager;
-
-        [HttpGet]
-        public IActionResult Register() {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel registerRequest) {
-
-            if (ModelState.IsValid) {
-                var newUser = new IdentityUser {
-                    UserName = registerRequest.Username,
-                    Email = registerRequest.Email,
-                };
-                var userResult = await userManager.CreateAsync(newUser, registerRequest.Password);
-
-                if (userResult.Succeeded) {
-                    var roleAssignedUesr = await userManager.AddToRoleAsync(newUser, "User");
-                    if (roleAssignedUesr.Succeeded) {
-                        // Show success notification
-                        return RedirectToAction("Register");
-                    }
-                }
-            }
-            
-            // Show error notification
-            return View();
-        }
 
         [HttpGet]
         public IActionResult Login(string returnUrl) {
