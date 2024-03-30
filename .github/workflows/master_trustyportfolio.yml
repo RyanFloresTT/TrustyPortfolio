@@ -22,9 +22,6 @@ jobs:
           dotnet-version: '8.0'
           include-prerelease: true
 
-      - name: Install NUnit
-        run: dotnet tool install --global NUnit.Console
-
       - name: Restore dependencies, build, and run tests
         run: |
           dotnet restore
