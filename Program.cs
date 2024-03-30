@@ -17,21 +17,37 @@ SecretClientOptions options = new SecretClientOptions() {
             Mode = RetryMode.Exponential
          }
 };
-var client = new SecretClient(
-    new Uri("https://trustyportfoliovault.vault.azure.net/"), 
+
+string currentEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+string authDbConnectionString;
+string portfolioDbConnectionString;
+
+if (string.Equals("Development", currentEnvironment)) {
+    authDbConnectionString = builder.Configuration["AuthDbConnectionString"];
+    portfolioDbConnectionString = builder.Configuration["PortfolioDbConnectionString"];
+} else {
+    var client = new SecretClient(
+    new Uri("https://trustyportfoliovault.vault.azure.net/"),
     new DefaultAzureCredential(), options);
 
-var authDbConnectionString = await client.GetSecretAsync("PortfolioAuthDbConnectionString");
-var portfolioDbConnectionString = await client.GetSecretAsync("PortfolioDbConnectionString");
+    var temp = await client.GetSecretAsync("PortfolioAuthDbConnectionString");
+    authDbConnectionString = temp.Value.Value;
+    temp = await client.GetSecretAsync("PortfolioDbConnectionString");
+    portfolioDbConnectionString = temp.Value.Value;
+}
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
-    options.UseSqlServer(portfolioDbConnectionString.Value.Value));
+    options.UseSqlServer(portfolioDbConnectionString));
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(authDbConnectionString.Value.Value));
+    options.UseSqlServer(authDbConnectionString));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();

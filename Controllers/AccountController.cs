@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TrustyPortfolio.Models.ViewModels;
 
 namespace TrustyPortfolio.Controllers {
-    public class AccountController (SignInManager<IdentityUser> signInManager) : Controller {
+    public class AccountController (UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) : Controller {
+        readonly UserManager<IdentityUser> userManager = userManager;
         readonly SignInManager<IdentityUser> signInManager = signInManager;
 
         [HttpGet]
@@ -14,6 +15,7 @@ namespace TrustyPortfolio.Controllers {
 
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginRequest) {
 
