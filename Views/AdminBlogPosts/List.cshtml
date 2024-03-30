@@ -52,11 +52,14 @@
                             </span>
                         </span>
                     </th>
-                    <td>
+                    <th>
                         Tags
-                    </td>
-                    <td>
-                    </td>
+                    </th>
+                    <th>
+                        Project
+                    </th>
+                    <th>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -73,6 +76,11 @@
                                     }
                                 }
                             </div>
+                        </td>
+                        <td>
+                            @if (blogPost.Project != null) {
+                                <span class="badge bg-secondary me-1">@blogPost.Project.Title</span>
+                            }
                         </td>
                         <td>
                             <a class="btn btn-warning" asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id">Edit</a>

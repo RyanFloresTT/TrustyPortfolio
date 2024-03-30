@@ -11,10 +11,6 @@
 
     <form method="post" class="">
         <div class="mb-3">
-            <label class="form-label">Heading</label>
-            <input type="text" class="form-control" id="heading" asp-for="Heading" />
-        </div>
-        <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" class="form-control" id="title" asp-for="Title" />
         </div>
@@ -31,13 +27,11 @@
             <input type="file" id="featuredImageUpload" class="form-control" />
             <img src="" id="featuredImageDisplay" style="display:none; width: 300px;" />
         </div>
-        <div class="mb-3">
-            <label class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
+        <div>
+            <input type="hidden" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
         </div>
-        <div class="mb-3">
-            <label class="form-label">URL Handle</label>
-            <input type="text" class="form-control" id="urlHandle" asp-for="UrlHandle" />
+        <div>
+            <input type="hidden" class="form-control" id="urlHandle" asp-for="UrlHandle" />
         </div>
         <div class="mb-3">
             <label class="form-label">Project URL</label>
@@ -61,11 +55,6 @@
             </select>
         </div>
         <div class="mb-3">
-            <label class="form-label">Related Blogs</label>
-            <select class="form-select" asp-items="@Model.Blogs" asp-for="SelectedBlogs">
-            </select>
-        </div>
-        <div class="mb-3">
             <button type="submit" class="btn btn-dark">Save</button>
         </div>
     </form>
@@ -79,6 +68,18 @@
         const featuredUploadElement = document.getElementById('featuredImageUpload');
         const featuredImageUrlElement = document.getElementById('featuredImageUrl');
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+        const titleElement = document.getElementById('title');
+        const urlHandleElement = document.getElementById('urlHandle');
+
+        function updateUrlHandle() {
+            var title = titleElement.value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            urlHandleElement.value = title;
+            console.log(title)
+        }
+
+        titleElement.addEventListener('change', updateUrlHandle);
+
+        updateUrlHandle();
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);

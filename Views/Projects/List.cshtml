@@ -34,10 +34,7 @@ SMALL CARD
                 foreach (var project in Model) {
                     @if (project.Visible && project.Featured) {
                         <div class="card mb-3">
-                            <h3 class="card-header">@project.Heading</h3>
-                            <div class="card-body">
-                                <h5 class="card-title">@project.Title</h5>
-                            </div>
+                            <h3 class="card-header">@project.Title</h3>
                             <img src="@project.FeaturedImageUrl" />
                             <div class="card-body">
                                 <p class="card-text">@project.Description</p>
@@ -77,9 +74,8 @@ SMALL CARD
                         @if (project.Visible && !project.Featured) {
                             <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                                 <div class="card text-white bg-primary mb-3">
-                                    <div class="card-header">@project.Heading</div>
+                                    <div class="card-header">@project.Title</div>
                                     <div class="card-body">
-                                        <h4 class="card-title">@project.Title</h4>
                                         <p class="card-text">@project.Description</p>
                                     </div>
                                 </div>

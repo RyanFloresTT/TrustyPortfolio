@@ -29,7 +29,6 @@
             @foreach (var blogPost in Model.Where(blogPost => blogPost.Visible && blogPost.Featured)) {
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-4">
                     <div class="card mb-3">
-                        <h3 class="card-header">@blogPost.Heading</h3>
                         <div class="card-body">
                             <h5 class="card-title">@blogPost.Title</h5>
                         </div>
@@ -70,9 +69,8 @@
                         @if (blogPost.Visible && !blogPost.Featured) {
                             <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                                 <div class="card text-white bg-primary mb-3">
-                                    <div class="card-header">@blogPost.Heading</div>
+                                    <div class="card-header">@blogPost.Title</div>
                                     <div class="card-body">
-                                        <h4 class="card-title">@blogPost.Title</h4>
                                         <p class="card-text">@blogPost.Description</p>
                                     </div>
                                 </div>

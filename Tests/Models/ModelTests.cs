@@ -9,7 +9,6 @@ namespace TrustyPortfolio.Tests.Models {
             // Arrange
             BlogPost blog = new() {
                 Title = "Title",
-                Heading = "Heading",
                 Content = "This is a test blog post.",
                 Description = "This is a description of a test blog post.",
                 FeaturedImageUrl = "https://www.google.com",
@@ -20,14 +19,12 @@ namespace TrustyPortfolio.Tests.Models {
                 Tags = { 
                     new Tag(){
                         Name = "NameTag",
-                        DisplayName = "DisplayNameTag"
                     } 
                 }
             };
 
             // Assert
             Assert.That(string.Equals("Test Blog", blog.Title));
-            Assert.That(string.Equals("Heading", blog.Heading));
             Assert.That(string.Equals("This is a test blog post.", blog.Content));
             Assert.That(string.Equals("This is a description of a test blog post.", blog.Description));
             Assert.That(string.Equals("https://www.google.com", blog.FeaturedImageUrl));
@@ -36,8 +33,7 @@ namespace TrustyPortfolio.Tests.Models {
             Assert.That(blog.Visible);
             Assert.That(!blog.Featured);
             Assert.That(blog.Tags.Count == 1 && blog.Tags.First() == new Tag() {
-                Name = "NameTag",
-                DisplayName = "DisplayNameTag"
+                Name = "NameTag"
             });
         }
         [Test]
@@ -45,7 +41,6 @@ namespace TrustyPortfolio.Tests.Models {
             // Arrange
             Project project = new() {
                 Title = "Title",
-                Heading = "Heading",
                 Content = "This is a test blog post.",
                 Description = "This is a description of a test blog post.",
                 FeaturedImageUrl = "https://www.google.com",
@@ -56,8 +51,7 @@ namespace TrustyPortfolio.Tests.Models {
                 Featured = false,
                 Tags = {
                     new Tag(){
-                        Name = "NameTag",
-                        DisplayName = "DisplayNameTag"
+                        Name = "NameTag"
                     }
                 },
                 Blogs = {
@@ -67,7 +61,6 @@ namespace TrustyPortfolio.Tests.Models {
 
             // Assert
             Assert.That(string.Equals("Test Blog", project.Title));
-            Assert.That(string.Equals("Heading", project.Heading));
             Assert.That(string.Equals("This is a test blog post.", project.Content));
             Assert.That(string.Equals("This is a description of a test blog post.", project.Description));
             Assert.That(string.Equals("https://www.google.com", project.FeaturedImageUrl));
@@ -77,8 +70,7 @@ namespace TrustyPortfolio.Tests.Models {
             Assert.That(project.Visible);
             Assert.That(!project.Featured);
             Assert.That(project.Tags.Count == 1 && project.Tags.First() == new Tag() {
-                Name = "NameTag",
-                DisplayName = "DisplayNameTag"
+                Name = "NameTag"
             });
             Assert.That(project.Tags.Count == 1);
         }
@@ -86,13 +78,11 @@ namespace TrustyPortfolio.Tests.Models {
         public void Tag_Should_SetPropertiesCorrectly() {
             // Arrange
             Tag tag = new() {
-                Name = "NameTag",
-                DisplayName = "DisplayNameTag"
+                Name = "NameTag"
             };
 
             // Assert
             Assert.That(string.Equals("Test Blog", tag.Name));
-            Assert.That(string.Equals("Heading", tag.DisplayName));
         }
     }
 }

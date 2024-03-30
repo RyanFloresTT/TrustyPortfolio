@@ -7,20 +7,28 @@ using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Controllers {
     [Authorize(Roles = "Admin")]
-    public class AdminBlogPostsController(ITagRepository tagRepository, IBlogRepository blogPostRepository) : Controller {
+    public class AdminBlogPostsController(ITagRepository tagRepository, IBlogRepository blogPostRepository, IProjectRepository projectRepository) : Controller {
         readonly ITagRepository tagRepository = tagRepository;
         readonly IBlogRepository blogPostRepository = blogPostRepository;
+        readonly IProjectRepository projectRepository = projectRepository;
 
         [HttpGet]
         public async Task<IActionResult> Add() {
             // Get Tags from Repository
             var tags = await tagRepository.GetAllAsync();
+            var projects = await projectRepository.GetAllAsync();
 
             var model = new AddBlogPostRequest {
                 Tags = tags.Select(x => new SelectListItem {
-                    Text = x.DisplayName,
+                    Text = x.Name,
                     Value = x.Id.ToString(),
-                })
+                }),
+                Projects = new List<SelectListItem> { new SelectListItem { Text = "", Value = "" } }
+                  .Concat(projects.Select(x => new SelectListItem {
+                      Text = x.Title,
+                      Value = x.Id.ToString(),
+                  }))
+                  .ToList()
             };
         
             return View(model);
@@ -30,7 +38,6 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Add(AddBlogPostRequest blogPostRequest) {
 
             var blogPost = new BlogPost {
-                Heading = blogPostRequest.Heading,
                 Title = blogPostRequest.Title,
                 Content = blogPostRequest.Content,
                 Description = blogPostRequest.Description,
@@ -40,6 +47,17 @@ namespace TrustyPortfolio.Controllers {
                 Visible = blogPostRequest.Visible,
                 Featured = blogPostRequest.Featured,
             };
+
+            var selectedProject = blogPostRequest.SelectedProjectId;
+
+            if (selectedProject != null) {
+                var projectId = Guid.Parse(selectedProject);
+                var existingProject = await projectRepository.GetByGuidAsync(projectId);
+
+                if (existingProject != null) {
+                    blogPost.Project = existingProject;
+                }
+            }
 
             var selectedTags = new List<Tag>();
 
@@ -89,12 +107,12 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Edit(Guid id) {
             var blog = await blogPostRepository.GetByGuidAsync(id);
             var tags = await tagRepository.GetAllAsync();
+            var projects = await projectRepository.GetAllAsync();
 
             if (blog != null) {
 
                 var model = new EditBlogPostRequest {
                     Id = blog.Id,
-                    Heading = blog.Heading,
                     Title = blog.Title,
                     Content = blog.Content,
                     FeaturedImageUrl = blog.FeaturedImageUrl,
@@ -107,7 +125,14 @@ namespace TrustyPortfolio.Controllers {
                         Text = x.Name,
                         Value = x.Id.ToString()
                     }),
-                    SelectedTags = blog.Tags.Select(x => x.Id.ToString()).ToArray()
+                    Projects = new List<SelectListItem> { new SelectListItem { Text = "", Value = "" } }
+                        .Concat(projects.Select(x => new SelectListItem {
+                            Text = x.Title,
+                            Value = x.Id.ToString(),
+                        }))
+                        .ToList(),
+                    SelectedTags = blog.Tags.Select(x => x.Id.ToString()).ToArray(),
+                    SelectedProjectId = blog.Project?.Id.ToString()
                 };
                 return View(model);
             }
@@ -118,7 +143,6 @@ namespace TrustyPortfolio.Controllers {
             var blog = new BlogPost {
                 Id = editRequest.Id,
                 Title = editRequest.Title,
-                Heading = editRequest.Heading,
                 Content = editRequest.Content,
                 FeaturedImageUrl = editRequest.FeaturedImageUrl,
                 UrlHandle = editRequest.UrlHandle,
@@ -139,6 +163,17 @@ namespace TrustyPortfolio.Controllers {
             }
 
             blog.Tags = selectedTags;
+
+            var selectedProject = editRequest.SelectedProjectId;
+
+            if (selectedProject != null) {
+                var projectId = Guid.Parse(selectedProject);
+                var existingProject = await projectRepository.GetByGuidAsync(projectId);
+
+                if (existingProject != null) {
+                    blog.Project = existingProject;
+                }
+            }
 
             var updatedBlog = await blogPostRepository.UpdateAsync(blog);
 

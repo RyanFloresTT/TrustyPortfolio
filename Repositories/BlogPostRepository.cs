@@ -53,30 +53,39 @@ namespace TrustyPortfolio.Repositories {
             var skipResults = (pageNumber - 1) * pageSize;
             query = query.Skip(skipResults).Take(pageSize);
 
-            return await query.Include(x => x.Tags).ToListAsync();
+            return await query.Include(x => x.Tags)
+                                .Include(x => x.Project)
+                                .ToListAsync();
         }
 
         public async Task<BlogPost?> GetByGuidAsync(Guid id) {
-            return await db.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
+            return await db.BlogPosts.Include(x => x.Tags)
+                                .Include(x => x.Project)
+                                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle) {
             return await db.BlogPosts
                 .Include(x => x.Tags)
+                .Include(x => x.Project)
                 .FirstOrDefaultAsync(x =>x.UrlHandle == urlHandle);
         }
 
         public async Task<IEnumerable<BlogPost>> GetFeaturedAsync() {
-            return await db.BlogPosts.Include(x => x.Tags).Where(x => x.Featured).ToListAsync();
+            return await db.BlogPosts.Include(x => x.Tags)
+                                    .Include(x => x.Project)
+                                    .Where(x => x.Featured)
+                                    .ToListAsync();
         }
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost) {
-            var existingBlog = await db.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+            var existingBlog = await db.BlogPosts.Include(x => x.Tags)
+                                                .Include(x => x.Project)
+                                                .FirstOrDefaultAsync(x => x.Id == blogPost.Id);
 
             if (existingBlog != null) {
                 existingBlog.Id = blogPost.Id;
                 existingBlog.Title = blogPost.Title;
-                existingBlog.Heading = blogPost.Heading;
                 existingBlog.Content = blogPost.Content;
                 existingBlog.FeaturedImageUrl = blogPost.FeaturedImageUrl;
                 existingBlog.UrlHandle = blogPost.UrlHandle;
@@ -85,6 +94,7 @@ namespace TrustyPortfolio.Repositories {
                 existingBlog.Visible = blogPost.Visible;
                 existingBlog.Featured = blogPost.Featured;
                 existingBlog.Tags = blogPost.Tags;
+                existingBlog.Project = blogPost.Project;
 
                 await db.SaveChangesAsync();
                 return existingBlog;

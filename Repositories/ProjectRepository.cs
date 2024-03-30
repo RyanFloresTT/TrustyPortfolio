@@ -79,7 +79,6 @@ namespace TrustyPortfolio.Repositories {
             if (existingProject != null) {
                 existingProject.Id = project.Id;
                 existingProject.Title = project.Title;
-                existingProject.Heading = project.Heading;
                 existingProject.Content = project.Content;
                 existingProject.FeaturedImageUrl = project.FeaturedImageUrl;
                 existingProject.UrlHandle = project.UrlHandle;

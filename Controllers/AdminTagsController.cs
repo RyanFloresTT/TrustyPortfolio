@@ -25,7 +25,6 @@ namespace TrustyPortfolio.Controllers {
 
             var tag = new Tag {
                 Name = tagRequest.Name,
-                DisplayName = tagRequest.DisplayName
             };
 
             await tagRepository.AddAsync(tag);
@@ -68,8 +67,7 @@ namespace TrustyPortfolio.Controllers {
             if (tag != null) {
                 var editTag = new EditTagRequest {
                     Id = tag.Id,
-                    Name = tag.Name,
-                    DisplayName = tag.DisplayName
+                    Name = tag.Name
                 };
                 return View(editTag);
             }
@@ -80,8 +78,7 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Edit(EditTagRequest editRequest) {
             var tag = new Tag {
                 Id = editRequest.Id,
-                Name = editRequest.Name,
-                DisplayName = editRequest.DisplayName
+                Name = editRequest.Name
             };
 
             var updatedTag = await tagRepository.UpdateAsync(tag);

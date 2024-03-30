@@ -16,16 +16,11 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Add() {
             // Get Tags from Repository
             var tags = await tagRepository.GetAllAsync();
-            var blogs = await blogRepository.GetAllAsync();
 
             var model = new AddProjectRequest {
                 Tags = tags.Select(x => new SelectListItem {
-                    Text = x.DisplayName,
+                    Text = x.Name,
                     Value = x.Id.ToString(),
-                }),
-                Blogs = blogs.Select(x => new SelectListItem {
-                    Text = x.Title,
-                    Value = x.Id.ToString()
                 })
             };
 
@@ -36,7 +31,6 @@ namespace TrustyPortfolio.Controllers {
         public async Task<IActionResult> Add(AddProjectRequest projectRequest) {
 
             var newProject = new Project {
-                Heading = projectRequest.Heading,
                 Title = projectRequest.Title,
                 Content = projectRequest.Content,
                 Description = projectRequest.Description,
@@ -45,7 +39,7 @@ namespace TrustyPortfolio.Controllers {
                 UrlHandle = projectRequest.UrlHandle,
                 PublishDate = projectRequest.PublishDate,
                 Visible = projectRequest.Visible,
-                Featured = projectRequest.Featured,
+                Featured = projectRequest.Featured
             };
 
             var selectedTags = new List<Tag>();
@@ -60,20 +54,6 @@ namespace TrustyPortfolio.Controllers {
             }
 
             newProject.Tags = selectedTags;
-
-            var selectedBlogs = new List<BlogPost>();
-
-            foreach (var blogId in projectRequest.SelectedBlogs) {
-                var selectedBlogId = Guid.Parse(blogId);
-                var existingBlog = await blogRepository.GetByGuidAsync(selectedBlogId);
-
-                if (existingBlog != null) { 
-                    selectedBlogs.Add(existingBlog);
-                }
-
-            }
-
-            newProject.Blogs = selectedBlogs;
 
             await projectRepository.AddAsync(newProject);
 
@@ -117,7 +97,6 @@ namespace TrustyPortfolio.Controllers {
 
                 var model = new EditProjectRequest {
                     Id = project.Id,
-                    Heading = project.Heading,
                     Title = project.Title,
                     Content = project.Content,
                     FeaturedImageUrl = project.FeaturedImageUrl,
@@ -131,23 +110,22 @@ namespace TrustyPortfolio.Controllers {
                         Text = x.Name,
                         Value = x.Id.ToString()
                     }),
-                    Blogs = blogs.Select(x => new SelectListItem {
-                        Text = x.Title,
-                        Value = x.Id.ToString()
-                    }),
                     SelectedTags = project.Tags.Select(x => x.Id.ToString()).ToArray(),
-                    SelectedBlogs = project.Blogs.Select(x => x.Id.ToString()).ToArray()
                 };
+
+                model.Blogs = blogs.Where(x => x.Project.Id == model.Id).ToList();
+
                 return View(model);
             }
             return View(null);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(EditProjectRequest editRequest) {
+            var blogs = await blogRepository.GetAllAsync();
+
             var project = new Project {
                 Id = editRequest.Id,
                 Title = editRequest.Title,
-                Heading = editRequest.Heading,
                 Content = editRequest.Content,
                 FeaturedImageUrl = editRequest.FeaturedImageUrl,
                 ProjectUrl = editRequest.ProjectUrl,
@@ -157,6 +135,8 @@ namespace TrustyPortfolio.Controllers {
                 Visible = editRequest.Visible,
                 Featured = editRequest.Featured
             };
+
+            project.Blogs = blogs.Where(x => x.Project.Id == project.Id).ToList();
 
             var selectedTags = new List<Tag>();
             foreach (var selectedTag in editRequest.SelectedTags) {
@@ -170,9 +150,9 @@ namespace TrustyPortfolio.Controllers {
 
             project.Tags = selectedTags;
 
-            var updatedBlog = await projectRepository.UpdateAsync(project);
+            var updatedProject = await projectRepository.UpdateAsync(project);
 
-            if (updatedBlog != null) {
+            if (updatedProject != null) {
                 // Show Success Notification
                 return RedirectToAction("Edit");
             } else {

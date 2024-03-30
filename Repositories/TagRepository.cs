@@ -41,8 +41,7 @@ namespace TrustyPortfolio.Repositories {
 
             // Filter
             if (!string.IsNullOrWhiteSpace(searchQuery)) {
-                query = query.Where(x => x.Name.Contains(searchQuery) || 
-                                        x.DisplayName.Contains(searchQuery));
+                query = query.Where(x => x.Name.Contains(searchQuery));
             }
             
             // Sort
@@ -51,9 +50,6 @@ namespace TrustyPortfolio.Repositories {
 
                 if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase)) {
                     query = isDesc ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name);
-                }
-                if (string.Equals(sortBy, "DisplayName", StringComparison.OrdinalIgnoreCase)) {
-                    query = isDesc ? query.OrderByDescending(x => x.DisplayName) : query.OrderBy(x => x.DisplayName);
                 }
             }
 
@@ -73,7 +69,6 @@ namespace TrustyPortfolio.Repositories {
 
             if (existingTag != null) {
                 existingTag.Name = tag.Name;
-                existingTag.DisplayName = tag.DisplayName;
 
                 await db.SaveChangesAsync();
 
