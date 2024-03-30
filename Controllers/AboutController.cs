@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TrustyPortfolio.Controllers {
-    public class About : Controller {
+    public class AboutController : Controller {
         public IActionResult Index() {
             return View();
         }
