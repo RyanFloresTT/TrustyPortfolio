@@ -10,6 +10,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0'
+          include-prerelease: true
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build and run tests
+        run: dotnet test --configuration Release --logger trx --output test-results
+
   build:
     runs-on: windows-latest
 
@@ -36,7 +54,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: build
+    needs: [test, build]  # Ensure that 'deploy' job depends on 'test' and 'build' jobs
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -62,5 +80,4 @@ jobs:
         with:
           app-name: 'TrustyPortfolio'
           slot-name: 'Production'
-          package: .
-          
+          package: .        
