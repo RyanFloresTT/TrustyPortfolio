@@ -22,6 +22,9 @@ jobs:
           dotnet-version: '8.0'
           include-prerelease: true
 
+      - name: Install NUnit
+        run: dotnet tool install --global NUnit.Console
+
       - name: Restore dependencies
         run: dotnet restore
 
@@ -30,7 +33,6 @@ jobs:
 
   build:
     runs-on: windows-latest
-    needs: [test]
 
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +42,9 @@ jobs:
         with:
           dotnet-version: '8.0'
           include-prerelease: true
+
+      - name: Install NUnit
+        run: dotnet tool install --global NUnit.Console
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -81,4 +86,4 @@ jobs:
         with:
           app-name: 'TrustyPortfolio'
           slot-name: 'Production'
-          package: .        
+          package: .
