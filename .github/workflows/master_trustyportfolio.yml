@@ -10,27 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '8.0'
-          include-prerelease: true
-
-      - name: Install NUnit
-        run: dotnet tool install --global NUnit.Console
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build and run tests
-        run: dotnet test --configuration Release --logger trx --output test-results
-
   build:
     runs-on: windows-latest
 
@@ -46,8 +25,11 @@ jobs:
       - name: Install NUnit
         run: dotnet tool install --global NUnit.Console
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore dependencies, build, and run tests
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+          dotnet test --configuration Release --logger trx --output test-results
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -60,7 +42,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: [test, build]  # Ensure that 'deploy' job depends on 'test' and 'build' jobs
+    needs: build  # Ensure that 'deploy' job depends on 'build' job
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
