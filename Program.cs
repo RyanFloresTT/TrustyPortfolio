@@ -17,7 +17,9 @@ SecretClientOptions options = new SecretClientOptions() {
             Mode = RetryMode.Exponential
          }
 };
-var client = new SecretClient(new Uri("https://trustyportfoliovault.vault.azure.net/"), new DefaultAzureCredential(), options);
+var client = new SecretClient(
+    new Uri("https://trustyportfoliovault.vault.azure.net/"), 
+    new DefaultAzureCredential(), options);
 
 var authDbConnectionString = await client.GetSecretAsync("PortfolioAuthDbConnectionString");
 var portfolioDbConnectionString = await client.GetSecretAsync("PortfolioDbConnectionString");
