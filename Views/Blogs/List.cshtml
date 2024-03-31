@@ -39,7 +39,7 @@
                         <div class="col-12 d-flex">
                             @if (Model != null && blogPost.Tags.Any()) {
                                 @foreach (var tag in blogPost.Tags) {
-                                    <span class="badge bg-primary ms-1">@tag.Name</span>
+                                    <span class="badge bg-primary ms-3">@tag.Name</span>
                                 }
                             } else {
                                 <p>This is where I'd put the tags.... if this post had any!</p>
@@ -73,8 +73,11 @@
                                     <div class="card-body">
                                         <p class="card-text">@blogPost.Description</p>
                                     </div>
+                                    <a class="btn btn-outline-warning card-link m-2" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
+                                    <div class="card-footer text-muted">
+                                        @blogPost.PublishDate.ToShortDateString()
+                                    </div>
                                 </div>
-                                <a class="btn btn-outline-primary card-link" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
                             </div>
                         }
                     }

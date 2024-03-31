@@ -23,7 +23,7 @@ namespace TrustyPortfolio.Repositories {
             return null;
         }
         public async Task<int> CountAsync() {
-            return await db.Tags.CountAsync();
+            return await db.BlogPosts.CountAsync();
         }
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync(string? searchQuery = null,

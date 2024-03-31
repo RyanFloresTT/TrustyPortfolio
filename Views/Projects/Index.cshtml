@@ -11,15 +11,38 @@
                 <h1 class="mb-3">
                     @Model.Title
                 </h1>
-                <div class="d-flex justify-content-end mb-3">
-                    <span class="text-secondary">@Model.PublishDate.ToShortDateString()</span>
+                <div class="d-flex justify-content-between mb-3">
+                    <a class="text-warning" href="@Model.ProjectUrl"><i class="bi bi-github"> GitHub</i></a>
+                    <span>Published: @Model.PublishDate.ToShortDateString()</span>
                 </div>
                 <div class="mb-3 d-flex">
                     @foreach (var tag in Model.Tags) {
                         <span class="badge bg-secondary me-1">@tag.Name</span>
                     }
                 </div>
-                <img src="@Model.FeaturedImageUrl" class="d-block img-fluid mb-3" />
+                @if (Model.Blogs != null && Model.Blogs.Any()) {
+                    <div class="accordion mb-4" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Associated Blog Posts
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        @foreach (var blogPost in Model.Blogs) {
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="/Blogs?urlHandle=@blogPost.UrlHandle">@blogPost.Title</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <img src="@Model.FeaturedImageUrl" class="d-block img-fluid mb-3 w-100" />
                 <div class="mb-3 blog-details-content">
                     @Html.Raw(Model.Content)
                 </div>
@@ -35,14 +58,15 @@
     /**
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-
+    /*
     var disqus_config = function () {
-        this.page.url = @Model.UrlHandle;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = @Model.Id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
+    */
     (function () { // DON'T EDIT BELOW THIS LINE
         var d = document, s = d.createElement('script');
-        s.src = 'https://trustytea.disqus.com/embed.js';
+        s.src = 'https://trustytea-1.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

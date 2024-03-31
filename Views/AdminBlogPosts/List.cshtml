@@ -69,10 +69,12 @@
                             @blogPost.Title
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div>
                                 @if (blogPost.Tags != null && blogPost.Tags.Any()) {
                                     foreach (var tag in blogPost.Tags) {
-                                        <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        <div>
+                                            <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        </div>
                                     }
                                 }
                             </div>

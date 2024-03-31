@@ -12,14 +12,22 @@
                     @Model.Title
                 </h1>
                 <div class="d-flex justify-content-end mb-3">
-                    <span class="text-secondary">@Model.PublishDate.ToShortDateString()</span>
+                    <span>Published: @Model.PublishDate.ToShortDateString()</span>
                 </div>
-                <div class="mb-3 d-flex">
-                    @foreach (var tag in Model.Tags) {
-                        <span class="badge bg-secondary me-1">@tag.Name</span>
-                    }
+                <div class="justify-content-between">
+                    <div class="mb-3 d-flex">
+                        @foreach (var tag in Model.Tags) {
+                            <span class="badge bg-secondary me-1">@tag.Name</span>
+                        }
+                    </div>
+                    <div class="mb-4 w-100">
+                        @if (Model.Project != null) {
+                            <a href="/Projects?urlHandle=@Model.Project.UrlHandle" class="btn btn-lg btn-primary" type="button">Project Overview</a>
+                        }
+                    </div>
                 </div>
-                <img src="@Model.FeaturedImageUrl" class="d-block img-fluid mb-3"/>
+                
+                <img src="@Model.FeaturedImageUrl" class="d-block img-fluid mb-3 w-100"/>
                 <div class="mb-3 blog-details-content">
                     @Html.Raw(Model.Content)
                 </div>
