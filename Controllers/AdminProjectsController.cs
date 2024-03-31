@@ -57,11 +57,11 @@ namespace TrustyPortfolio.Controllers {
 
             await projectRepository.AddAsync(newProject);
 
-            return RedirectToAction("Add");
+            return RedirectToAction("List");
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1) {
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 10, int pageNumber = 1) {
 
             var totalTags = await projectRepository.CountAsync();
 
@@ -154,11 +154,10 @@ namespace TrustyPortfolio.Controllers {
 
             if (updatedProject != null) {
                 // Show Success Notification
-                return RedirectToAction("Edit");
             } else {
                 // Show Error Notification
             }
-            return RedirectToAction("Edit");
+            return RedirectToAction("List");
         }
 
         [HttpPost]

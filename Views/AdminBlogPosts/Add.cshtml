@@ -12,15 +12,15 @@
     <form method="post" class="">
         <div class="mb-3">
             <label class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" asp-for="Title" />
+            <input type="text" class="form-control" id="title" asp-for="Title" required />
         </div>
         <div class="mb-3">
             <label class="form-label">Content</label>
-            <textarea class="form-control" id="content" asp-for="Content"></textarea>
+            <textarea class="form-control" id="content" asp-for="Content" required></textarea>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" asp-for="Description" />
+            <input type="text" class="form-control" id="description" asp-for="Description" required />
         </div>
         <div class="mb-3">
             <label class="form-label">Featured Image Upload</label>
@@ -102,5 +102,6 @@
         }
 
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+        hljs.highlightAll();
     </script>
 }

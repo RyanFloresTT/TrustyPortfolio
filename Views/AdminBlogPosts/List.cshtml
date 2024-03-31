@@ -94,14 +94,14 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link"
-                       asp-controller="AdminProjects"
+                       asp-controller="AdminBlogPosts"
                        asp-action="List"
                        asp-route-pageNumber="@prevPage"
                        asp-route-pageSize="@ViewBag.PageSize">&laquo;</a>
                     @for (int i = 1; i < ViewBag.TotalPages + 1; i++) {
                     <li class="page-item">
                         <a class="page-link"
-                           asp-controller="AdminProjects"
+                           asp-controller="AdminBlogPosts"
                            asp-action="List"
                            asp-route-pageNumber="@i"
                            asp-route-pageSize="@ViewBag.PageSize"
@@ -111,7 +111,7 @@
                     }
                 <li class="page-item">
                     <a class="page-link"
-                       asp-controller="AdminProjects"
+                       asp-controller="AdminBlogPosts"
                        asp-action="List"
                        asp-route-pageNumber="@nextPage"
                        asp-route-pageSize="@ViewBag.PageSize"

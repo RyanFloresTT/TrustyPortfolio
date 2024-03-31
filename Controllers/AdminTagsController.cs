@@ -34,7 +34,7 @@ namespace TrustyPortfolio.Controllers {
 
         [HttpGet]
         [ActionName("List")]
-        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1) {
+        public async Task<IActionResult> List(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 10, int pageNumber = 1) {
 
             var totalTags = await tagRepository.CountAsync();
 
@@ -89,7 +89,7 @@ namespace TrustyPortfolio.Controllers {
                 ViewBag.ErrorMessage = "Failed to update tag.";
             }
 
-            return RedirectToAction("List", new { id = editRequest.Id });
+            return RedirectToAction("List");
         }
 
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest) {
