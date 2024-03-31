@@ -1,7 +1,6 @@
 ﻿namespace TrustyPortfolio.Models.Domain {
     public class Project {
         public Guid Id { get; set; }
-        public string Heading { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string Description { get; set; }
@@ -13,6 +12,6 @@
         public bool Featured { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
-        public ICollection<BlogPost> Blogs { get; set; }
+        public ICollection<BlogPost> Blogs { get; set; } 
     }
 }

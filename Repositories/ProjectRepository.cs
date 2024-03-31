@@ -68,7 +68,7 @@ namespace TrustyPortfolio.Repositories {
             return await db.Projects.Include(x => x.Tags).Where(x => x.Featured).ToListAsync();
         }
         public async Task<int> CountAsync() {
-            return await db.Tags.CountAsync();
+            return await db.Projects.CountAsync();
         }
 
         public async Task<Project?> UpdateAsync(Project project) {
@@ -79,7 +79,6 @@ namespace TrustyPortfolio.Repositories {
             if (existingProject != null) {
                 existingProject.Id = project.Id;
                 existingProject.Title = project.Title;
-                existingProject.Heading = project.Heading;
                 existingProject.Content = project.Content;
                 existingProject.FeaturedImageUrl = project.FeaturedImageUrl;
                 existingProject.UrlHandle = project.UrlHandle;

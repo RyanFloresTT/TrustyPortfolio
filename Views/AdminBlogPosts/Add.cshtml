@@ -11,33 +11,27 @@
 
     <form method="post" class="">
         <div class="mb-3">
-            <label class="form-label">Heading</label>
-            <input type="text" class="form-control" id="heading" asp-for="Heading"/>
-        </div>
-        <div class="mb-3">
             <label class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" asp-for="Title" />
+            <input type="text" class="form-control" id="title" asp-for="Title" required />
         </div>
         <div class="mb-3">
             <label class="form-label">Content</label>
-            <textarea class="form-control" id="content" asp-for="Content"></textarea>
+            <textarea class="form-control" id="content" asp-for="Content" required></textarea>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" asp-for="Description" />
+            <input type="text" class="form-control" id="description" asp-for="Description" required />
         </div>
         <div class="mb-3">
             <label class="form-label">Featured Image Upload</label>
             <input type="file" id="featuredImageUpload" class="form-control" />
             <img src="" id="featuredImageDisplay" style="display:none; width: 300px;" />
         </div>
-        <div class="mb-3">
-            <label class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
+        <div>
+            <input type="hidden" class="form-control" id="featuredImageUrl" name="FeaturedImageUrl" asp-for="FeaturedImageUrl" />
         </div>
-        <div class="mb-3">
-            <label class="form-label">URL Handle</label>
-            <input type="text" class="form-control" id="urlHandle" asp-for="UrlHandle" />
+        <div>
+            <input type="hidden" class="form-control" id="urlHandle" asp-for="UrlHandle" />
         </div>
         <div class="mb-3">
             <label class="form-label">Published Date</label>
@@ -55,6 +49,10 @@
             <label class="form-label">Tags</label>
             <select class="form-select" asp-items="@Model.Tags" asp-for="SelectedTags">
             </select>
+        </div><div class="mb-3">
+            <label class="form-label">Project</label>
+            <select class="form-select" asp-items="@Model.Projects" asp-for="SelectedProjectId">
+            </select>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-dark">Save</button>
@@ -70,6 +68,18 @@
         const featuredUploadElement = document.getElementById('featuredImageUpload');
         const featuredImageUrlElement = document.getElementById('featuredImageUrl');
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+        const titleElement = document.getElementById('title');
+        const urlHandleElement = document.getElementById('urlHandle');
+
+        function updateUrlHandle() {
+            var title = titleElement.value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            urlHandleElement.value = title;
+            console.log(title)
+        }
+
+        titleElement.addEventListener('change', updateUrlHandle);
+
+        updateUrlHandle();
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);
@@ -88,8 +98,10 @@
                     featuredImageDisplayElement.src = result;
                     featuredImageDisplayElement.style.display = 'block';
                 });
+            console.log("uploaded");
         }
 
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+        hljs.highlightAll();
     </script>
 }

@@ -29,23 +29,20 @@ SMALL CARD
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-6">
             @if (Model != null && Model.Any()) {
                 foreach (var project in Model) {
                     @if (project.Visible && project.Featured) {
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-4">
                         <div class="card mb-3">
-                            <h3 class="card-header">@project.Heading</h3>
-                            <div class="card-body">
-                                <h5 class="card-title">@project.Title</h5>
-                            </div>
+                            <h3 class="card-header">@project.Title</h3>
                             <img src="@project.FeaturedImageUrl" />
                             <div class="card-body">
                                 <p class="card-text">@project.Description</p>
                             </div>
-                            <div class="col-6 d-flex">
+                            <div class="col-12 d-flex">
                                 @if (Model != null && project.Tags.Any()) {
                                     @foreach (var tag in project.Tags) {
-                                        <span class="badge bg-primary ms-1">@tag.Name</span>
+                                        <span class="badge bg-primary ms-3">@tag.Name</span>
                                     }
                                 } else {
                                     <p>This is where I'd put the tags.... if this project had any!</p>
@@ -53,16 +50,15 @@ SMALL CARD
                             </div>
                             <div class="card-body">
                                 <a class="btn btn-primary card-link" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-urlHandle="@project.UrlHandle">Learn More</a>
-                                <a class="btn btn-primary card-link" target="_blank" href="@project.ProjectUrl">Live Link</a>
                             </div>
                             <div class="card-footer text-muted">
                                 @project.PublishDate.ToShortDateString()
                             </div>
                         </div>
+                    </div>
                     }
                 }
             }
-        </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-12 mt-4 mb-4">
@@ -76,14 +72,16 @@ SMALL CARD
                     @foreach (var project in Model) {
                         @if (project.Visible && !project.Featured) {
                             <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
-                                <div class="card text-white bg-primary mb-3">
-                                    <div class="card-header">@project.Heading</div>
+                                <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                                    <div class="card-header">@project.Title</div>
                                     <div class="card-body">
-                                        <h4 class="card-title">@project.Title</h4>
                                         <p class="card-text">@project.Description</p>
                                     </div>
+                                    <a class="btn btn-outline-warning card-link m-2" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-urlHandle="@project.UrlHandle">Read More</a>
+                                    <div class="card-footer text-muted">
+                                        @project.PublishDate.ToShortDateString()
+                                    </div>
                                 </div>
-                                <a class="btn btn-outline-primary card-link" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-urlHandle="@project.UrlHandle">Read More</a>
                             </div>
                         }
                     }

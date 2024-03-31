@@ -2,7 +2,6 @@
 
 namespace TrustyPortfolio.Models.ViewModels {
     public class AddProjectRequest {
-        public string Heading { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string Description { get; set; }
@@ -15,9 +14,7 @@ namespace TrustyPortfolio.Models.ViewModels {
 
         // Display Tags
         public IEnumerable<SelectListItem> Tags { get; set; }
-        public IEnumerable<SelectListItem> Blogs { get; set; }
         // Collect Tags
         public string[] SelectedTags { get; set; } = [];
-        public string[] SelectedBlogs { get; set; } = [];
     }
 }

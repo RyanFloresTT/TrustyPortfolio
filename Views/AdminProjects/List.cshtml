@@ -69,19 +69,23 @@
                             @project.Title
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div>
                                 @if (project.Tags != null && project.Tags.Any()) {
                                     foreach (var tag in project.Tags) {
-                                        <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        <div>
+                                            <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        </div>
                                     }
                                 }
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex">
-                                @if (project.Tags != null && project.Blogs.Any()) {
+                            <div>
+                                @if (project.Blogs != null && project.Blogs.Any()) {
                                     foreach (var blog in project.Blogs) {
-                                        <span class="badge bg-secondary me-1">@blog.Title</span>
+                                        <div>
+                                            <span class="badge bg-secondary me-1">@blog.Title</span>
+                                        </div>
                                     }
                                 }
                             </div>

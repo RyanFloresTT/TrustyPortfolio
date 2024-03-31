@@ -52,11 +52,14 @@
                             </span>
                         </span>
                     </th>
-                    <td>
+                    <th>
                         Tags
-                    </td>
-                    <td>
-                    </td>
+                    </th>
+                    <th>
+                        Project
+                    </th>
+                    <th>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -66,13 +69,20 @@
                             @blogPost.Title
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div>
                                 @if (blogPost.Tags != null && blogPost.Tags.Any()) {
                                     foreach (var tag in blogPost.Tags) {
-                                        <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        <div>
+                                            <span class="badge bg-secondary me-1">@tag.Name</span>
+                                        </div>
                                     }
                                 }
                             </div>
+                        </td>
+                        <td>
+                            @if (blogPost.Project != null) {
+                                <span class="badge bg-secondary me-1">@blogPost.Project.Title</span>
+                            }
                         </td>
                         <td>
                             <a class="btn btn-warning" asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id">Edit</a>
@@ -86,14 +96,14 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link"
-                       asp-controller="AdminProjects"
+                       asp-controller="AdminBlogPosts"
                        asp-action="List"
                        asp-route-pageNumber="@prevPage"
                        asp-route-pageSize="@ViewBag.PageSize">&laquo;</a>
                     @for (int i = 1; i < ViewBag.TotalPages + 1; i++) {
                     <li class="page-item">
                         <a class="page-link"
-                           asp-controller="AdminProjects"
+                           asp-controller="AdminBlogPosts"
                            asp-action="List"
                            asp-route-pageNumber="@i"
                            asp-route-pageSize="@ViewBag.PageSize"
@@ -103,7 +113,7 @@
                     }
                 <li class="page-item">
                     <a class="page-link"
-                       asp-controller="AdminProjects"
+                       asp-controller="AdminBlogPosts"
                        asp-action="List"
                        asp-route-pageNumber="@nextPage"
                        asp-route-pageSize="@ViewBag.PageSize"
