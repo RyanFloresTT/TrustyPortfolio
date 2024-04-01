@@ -13,7 +13,7 @@ namespace TrustyPortfolio.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> List() {
-            var project = await projectRepository.GetAllAsync();
+            var project = await projectRepository.GetAllAsync("", "Publish Date", "Desc");
             return View(project);
         }
     }

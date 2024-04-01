@@ -40,8 +40,11 @@ namespace TrustyPortfolio.Repositories {
             if (!string.IsNullOrWhiteSpace(sortBy)) {
                 var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
 
-                if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase)) {
+                if (string.Equals(sortBy, "Title", StringComparison.OrdinalIgnoreCase)) {
                     query = isDesc ? query.OrderByDescending(x => x.Title) : query.OrderBy(x => x.Title);
+                }
+                if (string.Equals(sortBy, "Publish Date", StringComparison.OrdinalIgnoreCase)) {
+                    query = isDesc ? query.OrderByDescending(x => x.PublishDate) : query.OrderBy(x => x.PublishDate);
                 }
             }
 
