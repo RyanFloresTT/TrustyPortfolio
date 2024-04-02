@@ -24,3 +24,27 @@ body {
 .blog-details-content img {
     max-width: 100%;
 }
+.bubble-image {
+    position: absolute;
+    z-index: -1;
+}
+
+.left-bubble {
+    left: -50%;
+}
+
+.right-bubble {
+    right: -50%;
+}
+
+.bubble1 {
+    top: 10%; 
+}
+
+.bubble2 {
+    top: 40%; 
+}
+
+.bubble3 {
+    top: 70%;
+}
