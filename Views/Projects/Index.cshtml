@@ -12,7 +12,9 @@
                     @Model.Title
                 </h1>
                 <div class="d-flex justify-content-between mb-3">
-                    <a class="text-warning" href="@Model.ProjectUrl"><i class="bi bi-github"> GitHub</i></a>
+                    <a style="text-decoration:none" href="@Model.ProjectUrl">
+                        <img alt="Static Badge" src="https://img.shields.io/badge/Repo-white?style=social&logo=github">
+                    </a>
                     <span>Published: @Model.PublishDate.ToShortDateString()</span>
                 </div>
                 <div class="mb-3 d-flex">
