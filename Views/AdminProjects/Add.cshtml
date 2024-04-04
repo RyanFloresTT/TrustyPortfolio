@@ -74,7 +74,6 @@
         function updateUrlHandle() {
             var title = titleElement.value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
             urlHandleElement.value = title;
-            console.log(title)
         }
 
         titleElement.addEventListener('change', updateUrlHandle);

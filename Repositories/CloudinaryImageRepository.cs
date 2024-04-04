@@ -16,7 +16,8 @@ namespace TrustyPortfolio.Repositories {
             string apiSecret;
 
             if (string.Equals("Development", currentEnvironment)) {
-                cloudAccount = config["CloudinaryAccount"];
+                Console.WriteLine($"In Development Mode. Getting Secrets...");
+                cloudAccount = config["CloudinaryCloudName"];
                 apiKey = config["CloudinaryApiKey"];
                 apiSecret = config["CloudinaryApiSecret"];
             } else {
@@ -33,11 +34,11 @@ namespace TrustyPortfolio.Repositories {
                 new Uri("https://trustyportfoliovault.vault.azure.net/"),
                 new DefaultAzureCredential(), options);
 
-                var temp = client.GetSecret("CloudinaryAccount");
+                var temp = client.GetSecret("CloudinaryCloudName");
                 cloudAccount = temp.Value.Value;
-                temp = client.GetSecret("PortfolioDbConnectionString");
+                temp = client.GetSecret("CloudinaryApiKey");
                 apiKey = temp.Value.Value; 
-                temp = client.GetSecret("PortfolioDbConnectionString");
+                temp = client.GetSecret("CloudinaryApiSecret");
                 apiSecret = temp.Value.Value;
             }
 
