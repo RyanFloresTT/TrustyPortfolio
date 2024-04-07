@@ -45,10 +45,10 @@ if (string.Equals("Development", currentEnvironment)) {
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
-    options.UseSqlServer(portfolioDbConnectionString));
+    options.UseNpgsql(portfolioDbConnectionString));
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(authDbConnectionString));
+    options.UseNpgsql(authDbConnectionString));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
@@ -57,6 +57,7 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogPostRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var app = builder.Build();
 

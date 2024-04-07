@@ -21,7 +21,7 @@
                         }
                     </div>
                     <div class="mb-4 w-100">
-                        @if (Model.Project != null && string.Equals(Model.Project.Title, "-- BLANK --")) {
+                        @if (Model.Project != null && !string.Equals(Model.Project.Title, "-- BLANK --")) {
                             <a href="/Projects?urlHandle=@Model.Project.UrlHandle" class="btn btn-lg btn-primary" type="button">Project Overview</a>
                         }
                     </div>

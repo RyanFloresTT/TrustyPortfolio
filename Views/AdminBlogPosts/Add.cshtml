@@ -9,7 +9,7 @@
 <div class="container py-5">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
 
-    <form method="post" class="">
+    <form method="post" class="" id="form">
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" class="form-control" id="title" asp-for="Title" required />
@@ -71,6 +71,8 @@
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
         const titleElement = document.getElementById('title');
         const urlHandleElement = document.getElementById('urlHandle');
+        const formElement = document.getElementById('form');
+
 
         function updateUrlHandle() {
             var title = titleElement.value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -80,6 +82,10 @@
         titleElement.addEventListener('change', updateUrlHandle);
 
         updateUrlHandle();
+
+        formElement.addEventListener('submit', function (event) {
+            updateUrlHandle();
+        });
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);

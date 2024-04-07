@@ -70,6 +70,9 @@
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
         const titleElement = document.getElementById('title');
         const urlHandleElement = document.getElementById('urlHandle');
+        const formElement = document.getElementById('form');
+
+        featuredUploadElement.addEventListener('change', uploadFeaturedImage);
 
         function updateUrlHandle() {
             var title = titleElement.value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -79,6 +82,10 @@
         titleElement.addEventListener('change', updateUrlHandle);
 
         updateUrlHandle();
+
+        formElement.addEventListener('submit', function (event) {
+            updateUrlHandle();
+        });
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);
@@ -97,8 +104,8 @@
                     featuredImageDisplayElement.src = result;
                     featuredImageDisplayElement.style.display = 'block';
                 });
+            console.log("uploaded");
         }
 
-        featuredUploadElement.addEventListener('change', uploadFeaturedImage);
     </script>
 }
