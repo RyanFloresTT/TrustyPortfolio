@@ -9,44 +9,13 @@ namespace TrustyPortfolio.Repositories {
         readonly Account cloudinaryAccount;
 
         public CloudinaryImageRepository(IConfiguration config) {
-            string currentEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            string cloudAccount;
-            string apiKey;
-            string apiSecret;
-
-            if (string.Equals("Development", currentEnvironment)) {
-                Console.WriteLine($"In Development Mode. Getting Secrets...");
-                cloudAccount = config["CloudinaryCloudName"];
-                apiKey = config["CloudinaryApiKey"];
-                apiSecret = config["CloudinaryApiSecret"];
-            } else {
-                SecretClientOptions options = new SecretClientOptions() {
-                    Retry =
-                        {
-                        Delay = TimeSpan.FromSeconds(2),
-                        MaxDelay = TimeSpan.FromSeconds(16),
-                        MaxRetries = 5,
-                        Mode = RetryMode.Exponential
-                    }
-                };
-                var client = new SecretClient(
-                new Uri("https://trustyportfoliovault.vault.azure.net/"),
-                new DefaultAzureCredential(), options);
-
-                var temp = client.GetSecret("CloudinaryCloudName");
-                cloudAccount = temp.Value.Value;
-                temp = client.GetSecret("CloudinaryApiKey");
-                apiKey = temp.Value.Value; 
-                temp = client.GetSecret("CloudinaryApiSecret");
-                apiSecret = temp.Value.Value;
-            }
-
+            string cloudAccount = config["CloudinaryCloudName"];
+            string apiKey = config["CloudinaryApiKey"];
+            string apiSecret = config["CloudinaryApiSecret"];
             cloudinaryAccount = new(cloudAccount, apiKey, apiSecret);
         }
 
         public async Task<string> UploadAsync(IFormFile file) {
-
 
             var client = new Cloudinary(cloudinaryAccount);
 

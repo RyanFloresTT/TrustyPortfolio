@@ -13,5 +13,68 @@
                  alt="Profile Picture ;)"
                 class="d-block mx-lg-auto img-fluid" width="300"/>
         </div>
+        <!-- Featured Projects -->
+        @if (Model.Projects.Where(x => x.Featured).Any()) {
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    @foreach (var project in Model.Projects) {
+                        if (project.Featured) {
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="@project.FeaturedImageUrl" alt="@project.Title">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@project.Title</h5>
+                                    <p>@project.Description</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        }
+        
+        <!-- Featured Blogs -->
+        @if (Model.BlogPosts.Where(x => x.Featured).Any()) {
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    @foreach (var blogPost in Model.BlogPosts) {
+                        if (blogPost.Featured) {
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="@blogPost.FeaturedImageUrl" alt="@blogPost.Title">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@blogPost.Title</h5>
+                                    <p>@blogPost.Description</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        }
     </div>
 </div>
