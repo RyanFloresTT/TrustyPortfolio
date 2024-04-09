@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Query;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Repositories;
 
