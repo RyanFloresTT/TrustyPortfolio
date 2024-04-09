@@ -1,0 +1,16 @@
+﻿@if (!Projects.Any() || Projects == null) {
+    <div class="d-flex justify-content-center align-items-center">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+    </div>
+} else {
+    <MudCarousel Class="mud-width-full pa-4" Elevation="2" Style="height:100%;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+        @foreach (var project in Projects)
+        {
+            <MudCarouselItem Transition="Transition" Color="@Color.Primary">
+                <div class="d-flex justify-center" style="height:100%">
+                    <MudImage ObjectFit="ObjectFit.Contain" Fluid="true" Src="@project.FeaturedImageUrl" />
+                </div>
+            </MudCarouselItem>
+        }
+    </MudCarousel>
+}
