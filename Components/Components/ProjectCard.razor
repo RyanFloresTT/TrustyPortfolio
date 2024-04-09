@@ -1,0 +1,16 @@
+﻿<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">@Project.Title</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudLink Href="@Project.ProjectUrl"><MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" /></MudLink>
+        </CardHeaderActions>    
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText Typo="Typo.body2">@Project.Description</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+    </MudCardActions>
+</MudCard>

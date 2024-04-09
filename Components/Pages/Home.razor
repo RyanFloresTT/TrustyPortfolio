@@ -1,4 +1,9 @@
-﻿@model TrustyPortfolio.Models.ViewModels.HomeViewModel
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+@inherits LayoutComponentBase
+@using TrustyPortfolio.Models.ViewModels
 
 <div class="container col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-5 py-5">
@@ -11,7 +16,10 @@
         <div class="col-12 col-lg-6">
             <img style="border-radius: 50%" src="https://res.cloudinary.com/djdtmbpce/image/upload/c_crop,g_auto,h_800,w_800/l8mrq0vrbuaugbw9vpbt.jpg"
                  alt="Profile Picture ;)"
-                class="d-block mx-lg-auto img-fluid" width="300"/>
+                 class="d-block mx-lg-auto img-fluid" width="300" />
         </div>
     </div>
 </div>
+
+@code {
+}
