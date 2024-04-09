@@ -4,6 +4,7 @@ using TrustyPortfolio.Data;
 using TrustyPortfolio.Repositories;
 using TrustyPortfolio.Components;
 using MudBlazor.Services;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,11 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddDbContext<PortfolioDbContext>(options =>
-    options.UseNpgsql(builder.Configuration["PortfolioDbConnectionString"]));
+builder.Services.AddDbContext<PortfolioDbContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PortfolioDbConnectionString"));
+});
 
-builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseNpgsql(builder.Configuration["AuthDbConnectionString"]));
+builder.Services.AddDbContext<AuthDbContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("AuthDbConnectionString"));
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
@@ -28,6 +31,8 @@ builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
 builder.Services.AddMudServices();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehabior", true);
+
+StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
 var app = builder.Build();
 
@@ -44,7 +49,7 @@ app.UseAntiforgery();
 
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+   .AddInteractiveServerRenderMode();
 
 app.UseAuthentication();
 app.UseAuthorization();
