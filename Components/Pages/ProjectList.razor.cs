@@ -11,8 +11,11 @@ namespace TrustyPortfolio.Components.Pages {
 
         protected override async Task OnInitializedAsync() {
             await base.OnInitializedAsync();
-            var result = ProjectRepository.GetAllAsync();
-            projects = result.Result.ToList();
+            var result = await ProjectRepository.GetAllAsync("", "Publish Date", "Desc");
+            projects = result.ToList();
+
+            result = await ProjectRepository.GetFeaturedAsync();
+            featuredProjects = result.ToList();
         }
     }
 }

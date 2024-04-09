@@ -1,24 +1,33 @@
 ﻿@page "/Projects"
 @using TrustyPortfolio.Components.Components
 
-<h3>Projects</h3>
+<div class="align-content-center">
+    <h1 class="text-center mt-4">Featrued Projects: </h1>
+</div>
 
-<h4>Featured :</h4>
-
-@if (!featuredProjects.Any()) {
-    <p><em>Loading...</em></p>
-} else {
-    foreach (var project in featuredProjects) {
-        <FeaturedProjectCard Project="project"/>
+<div class="d-flex flex-wrap">
+    @if (!featuredProjects.Any()) {
+        <p><em>Loading...</em></p>
+    } else {
+        @foreach (var project in featuredProjects) {
+            <div class="col-lg-4 col-md-6 col-sm-12 p-4">
+                <FeaturedProjectCard Project="project" />
+            </div>
+        }
     }
-}
+</div>
+<div class="align-content-center">
+    <h1 class="text-center">More Projects: </h1>
+</div>
 
-<h4>More Projects: </h4>
-
-@if (!projects.Any()) {
-    <p><em>Loading...</em></p>
-} else {
-    foreach (var project in projects) {
-        <ProjectCard Project="project" />
+<div class="d-flex flex-wrap">
+    @if (!projects.Any()) {
+        <p><em>Loading...</em></p>
+    } else {
+        @foreach (var project in projects) {
+            <div class="col-lg-3 col-md-6 col-sm-6 p-4">
+                <ProjectCard Project="project" />
+            </div>
+        }
     }
-}
+</div>
