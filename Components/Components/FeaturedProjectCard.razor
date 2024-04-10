@@ -5,6 +5,7 @@
         <MudText Typo="Typo.body2">@Project.Description</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+        <MudButton Href="@GetURLHandle()" Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+        <MudLink Href="@Project.ProjectUrl"><MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" /></MudLink>
     </MudCardActions>
 </MudCard>

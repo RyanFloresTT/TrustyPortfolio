@@ -1,0 +1,10 @@
+﻿@page "/Projects/{UrlHandle}"
+
+<h3>ProjectIndex</h3>
+
+@if (Project == null) {
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+} else {
+    <h1>@Project.Title</h1>
+    <h3>@Project.Description</h3>
+}
