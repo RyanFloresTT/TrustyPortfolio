@@ -21,3 +21,12 @@
 </body>
 
 </html>
+ 
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private IComponentRenderMode? InteractiveServer => HttpContext.Request.Path.StartsWithSegments("/Account")
+        ? null
+        : InteractiveAuto;
+}

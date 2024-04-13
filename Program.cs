@@ -5,12 +5,26 @@ using TrustyPortfolio.Repositories;
 using TrustyPortfolio.Components;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.AspNetCore.Components.Authorization;
+using TrustyPortfolio.Components.Account;
+using TrustyPortfolio.Models.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<IdentityUserAccessor>();
+builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddAuthentication(options => {
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+    .AddIdentityCookies();
 
 builder.Services.AddDbContext<PortfolioDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("PortfolioDbConnectionString"));
@@ -20,8 +34,13 @@ builder.Services.AddDbContext<AuthDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("AuthDbConnectionString"));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<AuthDbContext>();
+builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticationStateProvider>();
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogPostRepository>();
@@ -47,11 +66,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-
 app.MapRazorComponents<App>()
-   .AddInteractiveServerRenderMode();
+   .AddInteractiveServerRenderMode()
+   .AddInteractiveWebAssemblyRenderMode();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.MapAdditionalIdentityEndpoints();
 
 app.Run();
