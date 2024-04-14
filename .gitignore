@@ -60,3 +60,4 @@ sysinfo.txt
 # Added by ME
 appsettings.Development.json
 appsettings.json
+/SeedAdmin.cs
