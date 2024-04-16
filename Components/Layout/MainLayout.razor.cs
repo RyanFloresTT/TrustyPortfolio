@@ -11,7 +11,6 @@ namespace TrustyPortfolio.Components.Layout {
         bool _drawerOpen = false;
         MudThemeProvider mudThemeProvider;
         string? currentUrl;
-
         protected override void OnInitialized() {
             currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
             NavigationManager.LocationChanged += OnLocationChanged;
