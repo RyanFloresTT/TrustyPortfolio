@@ -1,9 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @using TrustyPortfolio.Components.Components
+
 <MudThemeProvider @ref="@mudThemeProvider" @bind-IsDarkMode="@IsDarkMode" />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
 
 <div class="page">
     <MudLayout>
@@ -11,6 +11,27 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudText Typo="Typo.h5" Class="ml-3">Trusty Portfolio</MudText>
             <MudSpacer />
+            <AuthorizeView>
+                <Authorized>
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                        <button type="submit" class="nav-link">
+                            <MudButton Variant="Variant.Filled" Color="Color.Secondary">Logout</MudButton>
+                        </button>
+                    </form>
+                </Authorized>
+                <NotAuthorized>
+                    <MudButton OnClick="Login" Variant="Variant.Filled" Color="Color.Secondary">Login</MudButton>
+                </NotAuthorized>
+            </AuthorizeView>
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <button class="btn btn-danger">Admin Action</button>
+                </Authorized>
+                <NotAuthorized>
+                </NotAuthorized>
+            </AuthorizeView>
             <MudToggleIconButton @bind-Toggled="@IsDarkMode"
                                  Icon="@Icons.Material.TwoTone.WbSunny" Color="@Color.Error" Title="Off"
                                  ToggledIcon="@Icons.Material.Filled.Nightlight" ToggledColor="@Color.Success" ToggledTitle="On" />
@@ -30,11 +51,3 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
-@code {
-    bool _drawerOpen = false;
-
-    void DrawerToggle() {
-        _drawerOpen = !_drawerOpen;
-    }
-}
