@@ -7,10 +7,16 @@ namespace TrustyPortfolio.Components.Layout {
         [Inject] NavigationManager NavigationManager { get; set; }
 
         public bool IsDarkMode { get; set; }
+        string ToggledColor { 
+            get {
+                return IsDarkMode? $"color:{Colors.Blue.Lighten2};" : $"color:{Colors.Orange.Darken1};";
+            }
+        }
 
         bool _drawerOpen = false;
         MudThemeProvider mudThemeProvider;
         string? currentUrl;
+
         protected override void OnInitialized() {
             currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
             NavigationManager.LocationChanged += OnLocationChanged;

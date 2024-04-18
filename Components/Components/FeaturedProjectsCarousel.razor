@@ -6,11 +6,14 @@
     <MudCarousel Class="mud-width-full pa-4" Elevation="2" Style="height:100%;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
         @foreach (var project in Projects)
         {
-            <MudCarouselItem Transition="Transition" Color="@Color.Primary">
-                <div class="d-flex justify-center" style="height:100%">
-                    <MudImage ObjectFit="ObjectFit.Contain" Fluid="true" Src="@project.FeaturedImageUrl" />
-                </div>
-            </MudCarouselItem>
+            <MudLink Href="@GetProjetHandleURL(project)">
+                <MudCarouselItem Transition="Transition" Color="@Color.Primary">
+                    <div class="d-flex justify-center" style="height:100%">
+                        <MudImage ObjectFit="ObjectFit.Contain" Fluid="true" Src="@project.FeaturedImageUrl" />
+                    </div>
+                    <MudText Align="@Align.Center" Class="mx-auto">@project.Title</MudText>
+                </MudCarouselItem>
+            </MudLink>
         }
     </MudCarousel>
 }

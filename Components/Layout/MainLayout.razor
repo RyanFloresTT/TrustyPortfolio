@@ -32,8 +32,9 @@
                 </NotAuthorized>
             </AuthorizeView>
             <MudToggleIconButton @bind-Toggled="@IsDarkMode"
-                                 Icon="@Icons.Material.TwoTone.WbSunny" Color="@Color.Error" Title="Off"
-                                 ToggledIcon="@Icons.Material.Filled.Nightlight" ToggledColor="@Color.Success" ToggledTitle="On" />
+                                 Icon="@Icons.Material.TwoTone.WbSunny" Style="@ToggledColor" Title="Off"
+                                 ToggledIcon="@Icons.Material.Filled.Nightlight" ToggledTitle="On" />
+
             <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
         </MudAppBar>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">

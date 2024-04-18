@@ -19,5 +19,7 @@ namespace TrustyPortfolio.Components.Components {
 			}
 			return projectNames;
 		}
+
+		string GetProjetHandleURL(Project project) => $"/Projects/{project.UrlHandle}";
 	}
 }
