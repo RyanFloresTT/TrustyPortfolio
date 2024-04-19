@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrustyPortfolio.Data;
 using TrustyPortfolio.Models.Domain;
+using TrustyPortfolio.Utilities;
 
 namespace TrustyPortfolio.Repositories {
-    public class BlogPostRepository(PortfolioDbContext db) : IBlogRepository {
+    public class BlogPostRepository(PortfolioDbContext db) : IBlogRepository, IRandomRepository<BlogPost> {
         private readonly PortfolioDbContext db = db;
 
         public async Task<BlogPost> AddAsync(BlogPost blogPost) {
@@ -104,6 +105,11 @@ namespace TrustyPortfolio.Repositories {
             }
 
             return null;
+        }
+
+        public async Task<BlogPost> GetRandomAsync() {
+            var allPosts = await GetAllAsync();
+            return allPosts.ToList().RandomElement();
         }
     }
 }

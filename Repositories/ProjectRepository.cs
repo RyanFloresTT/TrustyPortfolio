@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 using TrustyPortfolio.Data;
 using TrustyPortfolio.Models.Domain;
+using TrustyPortfolio.Utilities;
 
 namespace TrustyPortfolio.Repositories {
-    public class ProjectRepository (PortfolioDbContext db) : IProjectRepository {
+    public class ProjectRepository (PortfolioDbContext db) : IProjectRepository, IRandomRepository<Project> {
         readonly PortfolioDbContext db =  db;
         public async Task<Project> AddAsync(Project project) {
             await db.AddAsync(project);
@@ -98,6 +100,11 @@ namespace TrustyPortfolio.Repositories {
             }
 
             return null;
+        }
+
+        public async Task<Project> GetRandomAsync() {
+            var allProjects = await GetAllAsync();
+            return allProjects.ToList().RandomElement();
         }
     }
 }

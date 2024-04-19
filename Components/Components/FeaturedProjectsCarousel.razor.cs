@@ -8,7 +8,7 @@ namespace TrustyPortfolio.Components.Components {
 		Transition Transition { get; set; } = Transition.Slide;
 
 		private bool arrows = true;
-		private bool bullets = true;
+		private bool bullets = false;
 		private bool enableSwipeGesture = true;
 		private bool autocycle = true;
 
