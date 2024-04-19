@@ -1,13 +1,13 @@
-﻿<MudCard>
+﻿<MudCard Elevation="5" Style="height: 200px; position: relative;">
     <MudCardHeader>
         <CardHeaderContent>
             <MudText Typo="Typo.h6">@BlogPost.Title</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
-        <MudText Typo="Typo.body2">@BlogPost.Description</MudText>
+        <MudText Style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" Typo="Typo.body2">@BlogPost.Description</MudText>
     </MudCardContent>
-    <MudCardActions>
+    <MudCardActions Style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px;">
         <MudButton Href="@GetURLHandle()" Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
     </MudCardActions>
 </MudCard>

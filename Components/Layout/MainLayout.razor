@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @namespace TrustyPortfolio.Components.Layout
-<MudThemeProvider @ref="@mudThemeProvider" @bind-IsDarkMode="@IsDarkMode" />
+<MudThemeProvider @ref="@mudThemeProvider" @bind-IsDarkMode="@IsDarkMode" Theme="MyCustomTheme"/>
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -24,18 +24,14 @@
                     <MudButton OnClick="Login" Variant="Variant.Filled" Color="Color.Secondary">Login</MudButton>
                 </NotAuthorized>
             </AuthorizeView>
-            <AuthorizeView Roles="Admin">
-                <Authorized>
-                    <button class="btn btn-danger">Admin Action</button>
-                </Authorized>
-                <NotAuthorized>
-                </NotAuthorized>
-            </AuthorizeView>
             <MudToggleIconButton @bind-Toggled="@IsDarkMode"
                                  Icon="@Icons.Material.TwoTone.WbSunny" Style="@ToggledColor" Title="Off"
                                  ToggledIcon="@Icons.Material.Filled.Nightlight" ToggledTitle="On" />
-
-            <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+            <AuthorizeView>
+                <MudAvatar>
+                    <MudImage Src="https://res.cloudinary.com/djdtmbpce/image/upload/c_crop,g_auto,h_800,w_800/l8mrq0vrbuaugbw9vpbt.jpg"></MudImage>
+                </MudAvatar>
+            </AuthorizeView>
         </MudAppBar>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
             <NavMenu />

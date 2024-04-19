@@ -1,7 +1,7 @@
 ﻿using TrustyPortfolio.Models.Domain;
 
 namespace TrustyPortfolio.Repositories {
-    public interface IBlogRepository {
+    public interface IBlogRepository : IRandomRepository<BlogPost> {
         Task<IEnumerable<BlogPost>> GetAllAsync(string? searchQuery = null,
             string? sortBy = null,
             string? sortDirection = null,

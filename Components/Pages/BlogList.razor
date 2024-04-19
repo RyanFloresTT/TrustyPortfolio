@@ -25,10 +25,6 @@
     @if (!blogs.Any()) {
         <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
     } else {
-        @foreach (var blog in blogs) {
-            <div class="col-lg-3 col-md-6 col-sm-6 p-4">
-                <BlogCard BlogPost="blog" />
-            </div>
-        }
+        <FilterChips BlogPosts="blogs" Tags="tags"/>
     }
 </div>

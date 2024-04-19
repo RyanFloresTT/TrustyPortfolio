@@ -5,8 +5,10 @@ using TrustyPortfolio.Repositories;
 namespace TrustyPortfolio.Components.Pages {
     public partial class BlogList {
         [Inject] IBlogRepository BlogRepository { get; set; }
+        [Inject] ITagRepository TagRepository { get; set; }
         List<BlogPost> blogs = new();
         List<BlogPost> featuredBlogs = new();
+        List<Tag> tags = new();
 
         protected override async Task OnInitializedAsync() {
             await base.OnInitializedAsync();
@@ -15,6 +17,9 @@ namespace TrustyPortfolio.Components.Pages {
 
             result = await BlogRepository.GetFeaturedAsync();
             featuredBlogs = result.ToList();
+
+            var tagResult = await TagRepository.GetAllAsync();
+            tags = tagResult.ToList();
         }
     }
 }

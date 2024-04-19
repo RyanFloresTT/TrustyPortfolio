@@ -5,7 +5,7 @@ using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Utilities;
 
 namespace TrustyPortfolio.Repositories {
-    public class ProjectRepository (PortfolioDbContext db) : IProjectRepository, IRandomRepository<Project> {
+    public class ProjectRepository (PortfolioDbContext db) : IProjectRepository {
         readonly PortfolioDbContext db =  db;
         public async Task<Project> AddAsync(Project project) {
             await db.AddAsync(project);

@@ -1,0 +1,58 @@
+﻿<MudContainer>
+    <MudContainer Class="d-flex justify-content-center">
+        <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
+            @foreach (var tag in Tags) {
+                <MudChip Text="@tag.Name" Variant="Variant.Text" Color="Color.Default">@tag.Name</MudChip>
+            }
+        </MudChipSet>
+    </MudContainer>
+
+    <MudGrid Spacing="2">
+        @if (selected != null && SelectedTags.Any()) {
+            @if (BlogPosts != null && BlogPosts.Any()) {
+                <MudItem Class="mt-4" xs="12">
+                    <MudText Class="mb-8" Align="Align.Center" Typo="Typo.h3">Blogs</MudText>
+                </MudItem>
+                @if (!IsAnyBlogMatchingTags) {
+                    <MudItem Class="mt-4" xs="12">
+                        <MudText Align="Align.Center" Typo="Typo.h3">No blogs match the selected tags.</MudText>
+                    </MudItem>
+                }
+                @if(SelectedTags.Any() && SelectedTags != null) {
+                    @foreach (var blogPost in BlogPosts) {
+                        <MudItem lg="4" md="6" xs="12" Class="p-4">
+                            <BlogCard BlogPost="blogPost" />
+                        </MudItem>
+                    }
+                } else {
+                    <MudContainer Class="d-flex flex-wrap justify-content-center">
+                        @foreach (var blogPost in BlogPosts.Where(x => SelectedTags.All(tag => x.Tags.Contains(tag)))) {
+                            <MudItem lg="4" md="6" xs="12" Class="p-4">
+                                <BlogCard BlogPost="blogPost" />
+                            </MudItem>
+                        }
+                    </MudContainer>
+                }
+
+            }
+
+            @if (Projects != null && Projects.Any()) {
+                <MudItem Class="mt-4" xs="12">
+                    <MudText Class="mb-8" Align="Align.Center" Typo="Typo.h3">Projects</MudText>
+                </MudItem>
+                @if (!IsAnyProjectMatchingTags) {
+                    <MudItem Class="mt-4" xs="12">
+                        <MudText Align="Align.Center" Typo="Typo.h3">No projects match the selected tags.</MudText>
+                    </MudItem>
+                }
+                <MudContainer Class="d-flex flex-wrap justify-content-center">
+                    @foreach (var project in Projects.Where(x => SelectedTags.All(tag => x.Tags.Contains(tag)))) {
+                        <MudItem lg="4" md="6" xs="12" Class="p-4">
+                            <ProjectCard Project="project" />
+                        </MudItem>
+                    }
+                </MudContainer>
+            }
+        }
+    </MudGrid>
+</MudContainer>

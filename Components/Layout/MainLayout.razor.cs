@@ -17,6 +17,14 @@ namespace TrustyPortfolio.Components.Layout {
         MudThemeProvider mudThemeProvider;
         string? currentUrl;
 
+        MudTheme MyCustomTheme = new() {
+            Typography = new() {
+                Default = new() {
+                    FontFamily = new[] { "Ubuntu" }
+                }
+            }
+        };
+
         protected override void OnInitialized() {
             currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
             NavigationManager.LocationChanged += OnLocationChanged;
@@ -24,8 +32,14 @@ namespace TrustyPortfolio.Components.Layout {
         protected override async Task OnAfterRenderAsync(bool firstRender) {
             if (firstRender) {
                 IsDarkMode = await mudThemeProvider.GetSystemPreference();
+                await mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
                 StateHasChanged();
             }
+        }
+        Task OnSystemPreferenceChanged(bool newValue) {
+            IsDarkMode = newValue;
+            StateHasChanged();
+            return Task.CompletedTask;
         }
         public void Dispose() {
             NavigationManager.LocationChanged -= OnLocationChanged;

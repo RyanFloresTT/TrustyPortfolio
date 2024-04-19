@@ -4,7 +4,7 @@ using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Utilities;
 
 namespace TrustyPortfolio.Repositories {
-    public class BlogPostRepository(PortfolioDbContext db) : IBlogRepository, IRandomRepository<BlogPost> {
+    public class BlogPostRepository(PortfolioDbContext db) : IBlogRepository {
         private readonly PortfolioDbContext db = db;
 
         public async Task<BlogPost> AddAsync(BlogPost blogPost) {
