@@ -1,0 +1,16 @@
+﻿@page "/Projects"
+@using TrustyPortfolio.Components.Components
+
+<MudContainer Class="d-flex flex-wrap justify-content-center align-items-center" MaxWidth="MaxWidth.ExtraLarge">
+    @if (!featuredProjects.Any() && !projects.Any()) {
+        <MudProgressCircular Color="Color.Primary" Style="height:35%;width:35%;" Indeterminate="true" />
+    } else {
+        @foreach (var project in featuredProjects) {
+            <MudItem lg="4" md="6" sm="12" Class="p-4">
+                <FeaturedProjectCard Project="project" />
+            </MudItem>
+        }
+        <ProjectFilterChips Projects="projects" Tags="tags" />
+    }
+</MudContainer>
+

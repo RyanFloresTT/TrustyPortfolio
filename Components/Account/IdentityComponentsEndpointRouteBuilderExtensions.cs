@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System.Security.Claims;
 using System.Text.Json;
-using TrustyPortfolio.Components.Account.Pages;
-using TrustyPortfolio.Components.Account.Pages.Manage;
+using TrustyPortfolio.Components.Pages.Account;
+using TrustyPortfolio.Components.Pages.Account.Manage;
 using TrustyPortfolio.Models.Domain;
 
 namespace Microsoft.AspNetCore.Routing {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Markdig;
+using Microsoft.AspNetCore.Components;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Repositories;
 
@@ -13,5 +14,10 @@ namespace TrustyPortfolio.Components.Components {
             BlogPost = await BlogRepository.GetByUrlHandleAsync(UrlHandle);
         }
 
+        MarkupString RenderMarkdown(string markdown) {
+            var pipeline = new MarkdownPipelineBuilder().Build();
+            var html = Markdown.ToHtml(markdown, pipeline);
+            return new MarkupString(html);
+        }
     }
 }

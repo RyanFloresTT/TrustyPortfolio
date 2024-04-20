@@ -5,6 +5,8 @@ using MudBlazor;
 namespace TrustyPortfolio.Components.Layout {
     public partial class MainLayout {
         [Inject] NavigationManager NavigationManager { get; set; }
+        [CascadingParameter]
+        HttpContext HttpContext { get; set; } = default!;
 
         public bool IsDarkMode { get; set; }
         string ToggledColor { 
@@ -23,7 +25,9 @@ namespace TrustyPortfolio.Components.Layout {
                     FontFamily = new[] { "Ubuntu" }
                 }
             }
-        };
+        }; 
+        protected override async Task OnInitializedAsync() {
+        }
 
         protected override void OnInitialized() {
             currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
