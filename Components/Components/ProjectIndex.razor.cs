@@ -4,13 +4,13 @@ using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Components.Components {
     public partial class ProjectIndex {
+        [CascadingParameter] PortfolioData PortfolioData { get; set; }
         [Parameter] public string UrlHandle { get; set; }
-        [Inject] IProjectRepository ProjectRepository { get; set; }
-        public Project Project { get; set; }
+        public Project? Project { get; set; }
 
         protected override async Task OnInitializedAsync() {
             await base.OnInitializedAsync();
-            Project = await ProjectRepository.GetByUrlHandleAsync(UrlHandle);
+            Project = PortfolioData.Projects.FirstOrDefault(x => x.UrlHandle == UrlHandle);
         }
 
     }

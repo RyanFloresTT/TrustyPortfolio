@@ -4,13 +4,12 @@ using TrustyPortfolio.Models.Domain;
 
 namespace TrustyPortfolio.Components.Components {
     public partial class ProjectFilterChips {
-        [Parameter] public List<Project> Projects { get; set; }
-        [Parameter] public List<Tag> Tags { get; set; }
+        [CascadingParameter] PortfolioData PortfolioData { get; set; }
         MudChip[] selected;
         public List<Tag> SelectedTags { get {
-                return selected == null ? new() : Tags.Where(tag => selected.Any(chip => chip.Text == tag.Name)).ToList();
+                return selected == null ? new() : PortfolioData.Tags.Where(tag => selected.Any(chip => chip.Text == tag.Name)).ToList();
             }
         }
-        bool IsAnyProjectMatchingTags => Projects.Any(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)));
+        bool IsAnyProjectMatchingTags => PortfolioData.Projects.Any(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)));
     }
 }

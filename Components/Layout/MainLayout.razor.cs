@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using MudBlazor;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using TrustyPortfolio.Models.Domain;
+using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Components.Layout {
     public partial class MainLayout {
         [Inject] NavigationManager NavigationManager { get; set; }
-        [CascadingParameter]
-        HttpContext HttpContext { get; set; } = default!;
+        [Inject] IBlogRepository BlogRepository { get; set; }
+        [Inject] IProjectRepository ProjectRepository { get; set; }
+        [Inject] ITagRepository TagRepository { get; set; }
+        [CascadingParameter] HttpContext HttpContext { get; set; } = default!;
 
+        PortfolioData PortfolioData { get; set; } = new();
         public bool IsDarkMode { get; set; }
+
         string ToggledColor { 
             get {
                 return IsDarkMode? $"color:{Colors.Blue.Lighten2};" : $"color:{Colors.Orange.Darken1};";
@@ -27,6 +35,26 @@ namespace TrustyPortfolio.Components.Layout {
             }
         }; 
         protected override async Task OnInitializedAsync() {
+            try {
+                await FetchDataAsync();
+            } catch (TaskCanceledException ex){ 
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        async Task FetchDataAsync() {
+            var blogResult = await BlogRepository.GetAllAsync();
+            PortfolioData.Blogs = blogResult.ToList();
+            blogResult = await BlogRepository.GetFeaturedAsync();
+            PortfolioData.FeaturedBlogs = blogResult.ToList();
+            
+            var projectResult = await ProjectRepository.GetAllAsync();
+            PortfolioData.Projects = projectResult.ToList();
+            projectResult = await ProjectRepository.GetFeaturedAsync();
+            PortfolioData.FeaturedProjects = projectResult.ToList();
+
+            var tagResult = await TagRepository.GetAllAsync();
+            PortfolioData.Tags = tagResult.ToList();
         }
 
         protected override void OnInitialized() {
@@ -60,4 +88,12 @@ namespace TrustyPortfolio.Components.Layout {
             NavigationManager.NavigateTo("/Account/Login");
         }
     }
+}
+
+public class PortfolioData {
+    public List<BlogPost> Blogs { get; set; } = new();
+    public List<BlogPost> FeaturedBlogs { get; set; } = new();
+    public List<Project> Projects { get; set; } = new();
+    public List<Project> FeaturedProjects { get; set; } = new();
+    public List<Tag> Tags { get; set; } = new();
 }

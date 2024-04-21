@@ -26,6 +26,10 @@ builder.Services.AddAuthentication(options => {
 })
     .AddIdentityCookies();
 
+builder.Services.AddOptions();
+builder.Services.AddAuthorizationCore();
+
+
 builder.Services.AddDbContext<PortfolioDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("PortfolioDbConnectionString"));
 });

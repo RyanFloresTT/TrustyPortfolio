@@ -3,6 +3,7 @@
 <h3>ProjectIndex</h3>
 
 @if (Project == null) {
+    <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 } else {
     <h1>@Project.Title</h1>

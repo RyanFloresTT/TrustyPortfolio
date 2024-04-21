@@ -1,0 +1,62 @@
+﻿@page "/Admin/Blogs/Edit"
+@attribute [Authorize(Roles = "Admin")]
+
+<MudDataGrid T="BlogPost" MultiSelection="true" Items="PortfolioData.Blogs" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+             Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Blog Posts</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Title" Title="Title" />
+        <PropertyColumn Property="x => x.Visible" />
+        <PropertyColumn Property="x => x.PublishDate" SortBy="@_sortBy" />
+        <PropertyColumn Property="x => x.Featured" />
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Delete</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="BlogPost" />
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+    [CascadingParameter] PortfolioData PortfolioData { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
+    private string _searchString;
+    private bool _sortNameByLength;
+    private List<string> _events = new();
+    // custom sort by name length
+    private Func<BlogPost, object> _sortBy => x => {
+        if (_sortNameByLength)
+            return x.Title.Length;
+        else
+            return x.Title;
+    };
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<BlogPost, bool> _quickFilter => x => {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<BlogPost> args) {
+        NavigationManager.NavigateTo("Admin/Blogs/Edit/" + args.Item.UrlHandle);
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<BlogPost> args) {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+}

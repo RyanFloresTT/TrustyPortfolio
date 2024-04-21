@@ -4,4 +4,20 @@
     <MudNavLink Href="/Projects" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Build">Projects</MudNavLink>
     <MudNavLink Href="/About" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person">About</MudNavLink>
     <MudNavLink Href="/Resume" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ContactPage">Resume</MudNavLink>
+    <AuthorizeView Roles="Admin">
+        <MudNavGroup Title="Admin" Expanded="true">
+            <MudNavGroup Title="Blogs">
+                <MudNavLink Href="/Admin/Blogs/Create">Create</MudNavLink>
+                <MudNavLink Href="/Admin/Blogs/Edit">Edit</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Title="Projects">
+                <MudNavLink Href="/Admin/Projects/Create">Create</MudNavLink>
+                <MudNavLink Href="/Admin/Projects/Edit">Edit</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Title="Tags">
+                <MudNavLink Href="/Admin/Tags/Create">Create</MudNavLink>
+                <MudNavLink Href="/Admin/Tags/Edit">Edit</MudNavLink>
+            </MudNavGroup>
+        </MudNavGroup>
+    </AuthorizeView>
 </MudNavMenu>

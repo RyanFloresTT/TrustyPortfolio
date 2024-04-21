@@ -1,6 +1,7 @@
 ﻿@page "/Blogs/{UrlHandle}"
 
 @if (BlogPost == null) {
+    <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 } else {
     <MudContainer>
