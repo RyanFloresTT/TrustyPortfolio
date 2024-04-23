@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Identity;
 using MudBlazor;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Repositories;
 
@@ -12,7 +15,10 @@ namespace TrustyPortfolio.Components.Layout {
         [Inject] IBlogRepository BlogRepository { get; set; }
         [Inject] IProjectRepository ProjectRepository { get; set; }
         [Inject] ITagRepository TagRepository { get; set; }
+        [Inject] AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [CascadingParameter] HttpContext HttpContext { get; set; } = default!;
+        ApplicationUser User;
 
         PortfolioData PortfolioData { get; set; } = new();
         public bool IsDarkMode { get; set; }
@@ -33,14 +39,20 @@ namespace TrustyPortfolio.Components.Layout {
                     FontFamily = new[] { "Ubuntu" }
                 }
             }
-        }; 
+        };
         protected override async Task OnInitializedAsync() {
             try {
                 await FetchDataAsync();
-            } catch (TaskCanceledException ex){ 
+            }
+            catch (TaskCanceledException ex) {
                 Console.WriteLine(ex.ToString());
             }
+            var authstate = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            if (authstate != null) {
+                User = await UserManager.GetUserAsync(authstate.User);
+            }
         }
+
 
         async Task FetchDataAsync() {
             var blogResult = await BlogRepository.GetAllAsync();
