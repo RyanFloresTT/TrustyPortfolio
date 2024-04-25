@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
+
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
 @inject SignInManager<ApplicationUser> SignInManager
@@ -40,6 +41,10 @@
                 <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label for="confirm-password">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+            </div>
+            <div class="form-check">
+                <InputCheckbox @bind-Value="Input.IsAdmin" class="form-check-input" />
+                <label class="form-check-label" for="is-admin">Is Admin</label>
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </EditForm>
@@ -77,6 +82,10 @@
         {
             identityErrors = result.Errors;
             return;
+        }
+
+        if (Input.IsAdmin) {
+            await UserManager.AddToRoleAsync(user, "Admin");
         }
 
         Logger.LogInformation("User created a new account with password.");
@@ -139,6 +148,10 @@
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+
         public string ConfirmPassword { get; set; } = "";
+
+        [Display(Name = "Is Admin")]
+        public bool IsAdmin { get; set; }
     }
 }

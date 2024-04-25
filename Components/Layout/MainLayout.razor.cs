@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Identity;
 using MudBlazor;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Claims;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Repositories;
 

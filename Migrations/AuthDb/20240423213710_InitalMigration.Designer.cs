@@ -12,8 +12,8 @@ using TrustyPortfolio.Data;
 namespace TrustyPortfolio.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240423133612_AddPfPURL_2")]
-    partial class AddPfPURL_2
+    [Migration("20240423213710_InitalMigration")]
+    partial class InitalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
