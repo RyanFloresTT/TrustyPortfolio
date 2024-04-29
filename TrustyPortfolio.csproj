@@ -12,6 +12,9 @@
     <PackageReference Include="Azure.Identity" Version="1.11.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="Markdig" Version="0.37.0" />
+    <PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />
+    <PackageReference Include="Markdown.ColorCode" Version="2.2.1" />
+    <PackageReference Include="Markdown.ColorCode.CSharpToColoredHtml" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
@@ -23,6 +26,7 @@
     <PackageReference Include="MudBlazor" Version="6.19.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
     <PackageReference Include="NUnit" Version="4.1.0" />
+    <PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

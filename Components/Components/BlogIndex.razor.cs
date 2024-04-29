@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Markdig;
+using Markdig.Prism;
+using Markdown.ColorCode;
+using Microsoft.AspNetCore.Components;
 using TrustyPortfolio.Models.Domain;
 
 namespace TrustyPortfolio.Components.Components {
@@ -12,5 +15,13 @@ namespace TrustyPortfolio.Components.Components {
             await base.OnInitializedAsync();
             BlogPost = PortfolioData.Blogs.FirstOrDefault(x => x.UrlHandle == UrlHandle);
         }
+        
+        private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseColorCode()
+            .Build();
     }
+
+
 }
+

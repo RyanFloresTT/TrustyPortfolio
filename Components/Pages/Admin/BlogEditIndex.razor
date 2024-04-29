@@ -1,4 +1,11 @@
 ﻿@page "/Admin/Blogs/Edit/{UrlHandle}"
 
-<MudText Typo="Typo.h1">@BlogPost.Title</MudText>
+<EditForm Model="@BlogPost" OnValidSubmit="@HandleSubmit">
+  <MudText Typo="Typo.h1">Title:</MudText>
+  <MudInput Variant="Variant.Filled" @bind-Value="@BlogPost.Title" Text="@BlogPost.Title" />
 
+  <MudText Typo="Typo.h1">Content:</MudText>
+  <MudTextField @bind-Value="BlogPost.Content" T="string" Label="Outlined" Variant="Variant.Outlined" Text="@BlogPost.Content" Lines="3" />
+
+  <MudButton ButtonType="ButtonType.Submit">Save Changes</MudButton>
+</EditForm>

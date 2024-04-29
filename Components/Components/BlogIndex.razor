@@ -1,4 +1,5 @@
 ﻿@page "/Blogs/{UrlHandle}"
+@using Markdig
 
 @if (BlogPost == null) {
     <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
@@ -10,7 +11,7 @@
     <MudContainer MaxWidth="MaxWidth.Medium">
         <MudText Align="Align.Center" Typo="Typo.h6">@BlogPost.Description</MudText>
         <MudContainer>
-            @BlogPost.Content
+            @((MarkupString) Markdown.ToHtml(BlogPost.Content, MarkdownPipeline))
         </MudContainer>
     </MudContainer>
 }
