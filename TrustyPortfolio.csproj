@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\AuthDb\" />
-    <Folder Include="wwwroot\Content\" />
   </ItemGroup>
 
 </Project>

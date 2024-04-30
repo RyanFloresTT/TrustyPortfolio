@@ -11,7 +11,9 @@
     <MudContainer MaxWidth="MaxWidth.Medium">
         <MudText Align="Align.Center" Typo="Typo.h6">@BlogPost.Description</MudText>
         <MudContainer>
-            @((MarkupString) Markdown.ToHtml(BlogPost.Content, MarkdownPipeline))
+            @if (BlogPost?.Content != null) {
+              @((MarkupString)Markdown.ToHtml(BlogPost.Content, MarkdownPipeline))
+            }
         </MudContainer>
     </MudContainer>
 }
