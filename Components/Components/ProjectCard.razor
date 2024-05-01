@@ -4,13 +4,13 @@
             <MudText Typo="Typo.h6">@Project.Title</MudText>
         </CardHeaderContent>
         <CardHeaderActions>
-            <MudLink Href="@Project.ProjectUrl"><MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" /></MudLink>
+            <MudLink Target="_blank" Href="@Project.ProjectUrl"><MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" /></MudLink>
         </CardHeaderActions>
     </MudCardHeader>
-    <MudCardContent>
-        <MudText Style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" Typo="Typo.body2">@Project.Description</MudText>
-    </MudCardContent>
     <MudCardActions Style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px;">
         <MudButton Href="@GetURLHandle()" Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+        <MudTooltip Text="@Project.Description" Color="Color.Primary" Placement="Placement.Top">
+            <MudIcon Icon="@Icons.Material.Outlined.Info" style="position: absolute; bottom: 8; right: 8;" />
+        </MudTooltip>
     </MudCardActions>
 </MudCard>

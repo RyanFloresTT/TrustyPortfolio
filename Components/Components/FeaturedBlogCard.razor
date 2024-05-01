@@ -2,9 +2,11 @@
     <MudCardMedia Image="@BlogPost.FeaturedImageUrl" Height="300" />
     <MudCardContent>
         <MudText Typo="Typo.h5">@BlogPost.Title</MudText>
-        <MudText Style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" Typo="Typo.body2">@BlogPost.Description</MudText>
     </MudCardContent>
     <MudCardActions Style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px;">
         <MudButton Href="@GetURLHandle()" Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+        <MudTooltip Text="@BlogPost.Description" Color="Color.Primary" Placement="Placement.Top">
+            <MudIcon Icon="@Icons.Material.Outlined.Info" style="position: absolute; bottom: 8; right: 8;" />
+        </MudTooltip>
     </MudCardActions>
 </MudCard>

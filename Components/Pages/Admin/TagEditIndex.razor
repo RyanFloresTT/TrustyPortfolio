@@ -1,0 +1,8 @@
+﻿@page "/Admin/Tags/Edit/{UrlHandle}"
+
+<EditForm Model="@Tag" OnValidSubmit="@HandleSubmit">
+  <MudText Typo="Typo.h2">Name:</MudText>
+    <MudInput Variant="Variant.Filled" @bind-Value="@Tag.Name" Text="@Tag.Name" />
+
+    <MudButton Class="mb-16" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Save Changes</MudButton>
+</EditForm>

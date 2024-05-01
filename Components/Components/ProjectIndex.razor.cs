@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Markdig;
+using Markdig.Prism;
+using Microsoft.AspNetCore.Components;
 using TrustyPortfolio.Models.Domain;
-using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Components.Components {
     public partial class ProjectIndex {
@@ -12,6 +13,13 @@ namespace TrustyPortfolio.Components.Components {
             await base.OnInitializedAsync();
             Project = PortfolioData.Projects.FirstOrDefault(x => x.UrlHandle == UrlHandle);
         }
+
+        string GetBlogUrlHandle(string blogUrlHandle) => $"/Blogs/{blogUrlHandle}";
+
+        private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UsePrism()
+            .Build();
 
     }
 }

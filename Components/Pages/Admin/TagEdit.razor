@@ -1,19 +1,16 @@
-﻿@page "/Admin/Projects/Edit"
+﻿@page "/Admin/Tags/Edit"
 @attribute [Authorize(Roles = "Admin")]
 
-<MudDataGrid T="Project" MultiSelection="true" Items="PortfolioData.Projects" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+<MudDataGrid T="Tag" MultiSelection="true" Items="PortfolioData.Tags" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
              Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Projects</MudText>
+        <MudText Typo="Typo.h6">Tags</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <Columns>
-        <PropertyColumn Property="x => x.Title" Title="Title" />
-        <PropertyColumn Property="x => x.Visible" />
-        <PropertyColumn Property="x => x.PublishDate" SortBy="@_sortBy" />
-        <PropertyColumn Property="x => x.Featured" />
+        <PropertyColumn Property="x => x.Name" Title="Title" />
         <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>
@@ -23,7 +20,7 @@
         </TemplateColumn>
     </Columns>
     <PagerContent>
-        <MudDataGridPager T="Project" />
+        <MudDataGridPager T="Tag" />
     </PagerContent>
 </MudDataGrid>
 
@@ -34,29 +31,29 @@
     private bool _sortNameByLength;
     private List<string> _events = new();
     // custom sort by name length
-    private Func<Project, object> _sortBy => x => {
+    private Func<Tag, object> _sortBy => x => {
         if (_sortNameByLength)
-            return x.Title.Length;
+            return x.Name.Length;
         else
-            return x.Title;
+            return x.Name;
     };
     // quick filter - filter globally across multiple columns with the same input
-    private Func<Project, bool> _quickFilter => x => {
+    private Func<Tag, bool> _quickFilter => x => {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
 
-        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
     };
 
     // events
-    void RowClicked(DataGridRowClickEventArgs<Project> args) {
-        NavigationManager.NavigateTo("Admin/Projects/Edit/" + args.Item.UrlHandle);
+    void RowClicked(DataGridRowClickEventArgs<Tag> args) {
+        NavigationManager.NavigateTo("Admin/Tags/Edit/" + args.Item.Id);
     }
 
-    void RowRightClicked(DataGridRowClickEventArgs<Project> args) {
+    void RowRightClicked(DataGridRowClickEventArgs<Tag> args) {
         _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 }
