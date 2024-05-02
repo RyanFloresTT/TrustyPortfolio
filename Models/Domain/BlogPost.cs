@@ -1,5 +1,7 @@
-﻿namespace TrustyPortfolio.Models.Domain {
-    public class BlogPost {
+﻿using TrustyPortfolio.Interfaces;
+
+namespace TrustyPortfolio.Models.Domain {
+    public class BlogPost : IContentItem {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

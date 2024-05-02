@@ -1,0 +1,35 @@
+﻿<MudContainer>
+    <MudContainer Class="my-8 d-flex justify-content-center">
+        <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
+            @foreach (var tag in PortfolioData.Tags) {
+                <MudChip Text="@tag.Name" Variant="Variant.Text" Color="Color.Secondary">@tag.Name</MudChip>
+            }
+        </MudChipSet>
+    </MudContainer>
+
+    <MudGrid Spacing="2">
+        @if (selected != null && SelectedTags.Any()) {
+            @if (PortfolioData.Projects != null && PortfolioData.Projects.Any()) {
+                @if (!IsAnyProjectMatchingTags) {
+                    <MudItem Class="mt-4" xs="12">
+                        <MudText Align="Align.Center" Typo="Typo.h3">No projects match the selected tags.</MudText>
+                    </MudItem>
+                } else {
+                    <MudContainer Class="d-flex flex-wrap justify-content-center">
+                        @foreach (var project in PortfolioData.Projects.Where(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)))) {
+                            <MudItem lg="4" md="6" xs="12" Class="p-4">
+                                <ProjectCard Project="project" />
+                            </MudItem>
+                        }
+                    </MudContainer>
+                }
+            }
+        } else {
+            @foreach (var project in PortfolioData.Projects.Where(x => x.Visible)) {
+                <MudItem lg="4" md="6" xs="12" Class="p-4">
+                    <ProjectCard Project="project"/>
+                </MudItem>
+            }
+        }
+    </MudGrid>
+</MudContainer>

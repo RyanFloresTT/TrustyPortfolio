@@ -1,5 +1,7 @@
-﻿namespace TrustyPortfolio.Models.Domain {
-    public class Project {
+﻿using TrustyPortfolio.Interfaces;
+
+namespace TrustyPortfolio.Models.Domain {
+    public class Project : IContentItem {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

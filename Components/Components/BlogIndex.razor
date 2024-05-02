@@ -1,0 +1,35 @@
+﻿@page "/Blogs/{UrlHandle}"
+@using Markdig
+
+@if (BlogPost == null) {
+    <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+} else {
+    <MudContainer Class="my-4">
+        <MudText Align="Align.Center" Typo="Typo.h2">@BlogPost.Title</MudText>
+    </MudContainer>
+
+    <MudContainer Class="my-4 py-12" MaxWidth="MaxWidth.Medium">
+        @if (BlogPost.Project != null && !string.Equals(BlogPost.Project.Title, "-- BLANK --")) {
+            <MudContainer Class="my-12 d-flex justify-content-between">
+                <MudText Typo="Typo.h4">@BlogPost.PublishDate.ToLongDateString()</MudText>
+                <MudButton Href="@projectUrlHandle" Color="Color.Primary" Variant="Variant.Filled">Project Overview</MudButton>
+            </MudContainer>
+        } else {
+            <MudContainer Class="my-12 d-flex justify-content-start">
+            <MudText Typo="Typo.h4">@BlogPost.PublishDate.ToLongDateString()</MudText>
+            </MudContainer>
+        }
+        <MudContainer>
+            <MudPaper Class="rounded-lg">
+                <MudContainer Class="pa-6">
+                    <MudText Typo="Typo.body1">
+                        @if (BlogPost?.Content != null) {
+                            @((MarkupString)Markdown.ToHtml(BlogPost.Content, MarkdownPipeline))
+                        }
+                    </MudText>
+                </MudContainer>
+            </MudPaper>
+        </MudContainer>
+    </MudContainer>
+}

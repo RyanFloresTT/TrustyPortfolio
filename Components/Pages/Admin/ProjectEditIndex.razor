@@ -1,0 +1,11 @@
+﻿@page "/Admin/Projects/Edit/{UrlHandle}"
+
+<EditForm Model="@Project" OnValidSubmit="@HandleSubmit">
+  <MudText Typo="Typo.h2">Title:</MudText>
+    <MudInput Variant="Variant.Filled" @bind-Value="@Project.Title" Text="@Project.Title" />
+
+  <MudText Typo="Typo.h2">Content:</MudText>
+    <MudTextField Class="pb-16" @bind-Value="Project.Content" T="string" Label="Outlined" Variant="Variant.Outlined" Text="@Project.Content" Lines="100" />
+
+    <MudButton Class="mb-16" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Save Changes</MudButton>
+</EditForm>

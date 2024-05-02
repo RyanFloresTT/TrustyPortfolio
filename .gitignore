@@ -56,3 +56,8 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Added by ME
+appsettings.Development.json
+appsettings.json
+/SeedAdmin.cs

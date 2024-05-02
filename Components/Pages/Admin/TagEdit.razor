@@ -1,0 +1,59 @@
+﻿@page "/Admin/Tags/Edit"
+@attribute [Authorize(Roles = "Admin")]
+
+<MudDataGrid T="Tag" MultiSelection="true" Items="PortfolioData.Tags" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+             Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Tags</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Name" Title="Title" />
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Delete</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="Tag" />
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+    [CascadingParameter] PortfolioData PortfolioData { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
+    private string _searchString;
+    private bool _sortNameByLength;
+    private List<string> _events = new();
+    // custom sort by name length
+    private Func<Tag, object> _sortBy => x => {
+        if (_sortNameByLength)
+            return x.Name.Length;
+        else
+            return x.Name;
+    };
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<Tag, bool> _quickFilter => x => {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<Tag> args) {
+        NavigationManager.NavigateTo("Admin/Tags/Edit/" + args.Item.Id);
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<Tag> args) {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+}

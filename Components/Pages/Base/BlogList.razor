@@ -1,0 +1,15 @@
+﻿@page "/Blogs"
+@using TrustyPortfolio.Components.Components
+
+<MudContainer Class="d-flex flex-wrap justify-content-center align-items-center" MaxWidth="MaxWidth.ExtraLarge">
+    @if (!PortfolioData.FeaturedBlogs.Any() && !PortfolioData.Blogs.Any()) {
+        <MudProgressCircular Color="Color.Primary" Style="height:35%;width:35%;" Indeterminate="true" />
+    } else {
+        @foreach (var blog in PortfolioData.FeaturedBlogs) {
+            <MudItem lg="4" md="6" sm="12" Class="p-4">
+                <FeaturedBlogCard BlogPost="blog" />
+            </MudItem>
+        }
+        <BlogFilterChips/>
+    }
+</MudContainer>

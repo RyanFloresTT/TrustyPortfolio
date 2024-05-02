@@ -1,0 +1,47 @@
+﻿@page "/Projects/{UrlHandle}"
+@using Markdig
+
+@if (Project == null) {
+    <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+} else {
+    <MudContainer Class="my-4">
+        <MudText Align="Align.Center" Typo="Typo.h2">@Project.Title</MudText>
+    </MudContainer>
+
+    <MudContainer Class="my-4 py-12" MaxWidth="MaxWidth.Medium">
+        <MudContainer Class="my-12 d-flex justify-content-start">
+            <MudText Typo="Typo.h4">@Project.PublishDate.ToLongDateString()</MudText>
+        </MudContainer>
+        @if (Project.Blogs.Any()) {
+            <MudContainer Class="mb-12">
+                <MudPaper>
+                    <MudList Clickable="true">
+                        <MudListItem IconColor="Color.Primary" Icon="@Icons.Material.Filled.Bookmark" Text="Blog Posts" InitiallyExpanded="false">
+                            <NestedList>
+                                @foreach(var blog in Project.Blogs) {
+                                    <MudLink Href="@GetBlogUrlHandle(blog.UrlHandle)">
+                                        <MudListItem IconColor="Color.Secondary" Icon="@Icons.Material.Filled.Bookmark">
+                                            @blog.Title
+                                        </MudListItem>
+                                    </MudLink>
+                                }
+                            </NestedList>
+                        </MudListItem>
+                    </MudList>
+                </MudPaper>
+            </MudContainer>
+        }
+        <MudContainer>
+            <MudPaper Class="rounded-lg">
+                <MudContainer Class="pa-6">
+                    <MudText Typo="Typo.body1">
+                        @if (Project?.Content != null) {
+                            @((MarkupString)Markdown.ToHtml(Project.Content, MarkdownPipeline))
+                        }
+                    </MudText>
+                </MudContainer>
+            </MudPaper>
+        </MudContainer>
+    </MudContainer>
+}
