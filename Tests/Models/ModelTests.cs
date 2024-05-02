@@ -2,7 +2,7 @@
 using TrustyPortfolio.Models.Domain;
 
 namespace TrustyPortfolio.Tests.Models {
-    [TestFixture]
+    [TestFixture]   
     public class ModelTests {
         [Test]
         public void Blog_Should_SetPropertiesCorrectly() {
