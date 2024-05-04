@@ -1,0 +1,11 @@
+﻿@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        Are you sure you want to delete this tag?
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">No</MudButton>
+        <MudButton Color="Color.Primary" OnClick="DeleteTag">Yes</MudButton>
+    </DialogActions>
+</MudDialog>

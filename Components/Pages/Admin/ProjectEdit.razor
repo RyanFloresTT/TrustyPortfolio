@@ -1,10 +1,11 @@
-﻿@page "/Admin/Blogs/Edit"
+﻿@page "/Admin/Projects/Edit"
 @attribute [Authorize(Roles = "Admin")]
+@inject IDialogService DialogService
 
-<MudDataGrid T="BlogPost" MultiSelection="true" Items="PortfolioData.Blogs" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
-             Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked">
+<MudDataGrid T="Project" MultiSelection="true" Items="PortfolioData.Projects" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+             Hideable="true" RowClick="@RowClicked">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Blog Posts</MudText>
+        <MudText Typo="Typo.h6">Projects</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -17,31 +18,32 @@
         <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>
-                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Delete</MudButton>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="@((e) => { _ = ShowConfirmationDialog(context.Item.Id); })">Delete</MudButton>
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>
     </Columns>
     <PagerContent>
-        <MudDataGridPager T="BlogPost" />
+        <MudDataGridPager T="Project" />
     </PagerContent>
 </MudDataGrid>
 
 @code {
     [CascadingParameter] PortfolioData PortfolioData { get; set; }
+    [Inject] IProjectRepository ProjectRepository { get; set; }
     [Inject] NavigationManager NavigationManager { get; set; }
     private string _searchString;
     private bool _sortNameByLength;
     private List<string> _events = new();
     // custom sort by name length
-    private Func<BlogPost, object> _sortBy => x => {
+    private Func<Project, object> _sortBy => x => {
         if (_sortNameByLength)
             return x.Title.Length;
         else
             return x.Title;
     };
     // quick filter - filter globally across multiple columns with the same input
-    private Func<BlogPost, bool> _quickFilter => x => {
+    private Func<Project, bool> _quickFilter => x => {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
 
@@ -51,12 +53,17 @@
         return false;
     };
 
-    // events
-    void RowClicked(DataGridRowClickEventArgs<BlogPost> args) {
-        NavigationManager.NavigateTo("Admin/Blogs/Edit/" + args.Item.UrlHandle);
+    void RowClicked(DataGridRowClickEventArgs<Project> args) {
+        NavigationManager.NavigateTo("Admin/Projects/Edit/" + args.Item.UrlHandle);
     }
+    async Task ShowConfirmationDialog(Guid projectId) {
+        var project = PortfolioData.Projects.FirstOrDefault(x => x.Id == projectId);
+        var parameters = new DialogParameters<DeleteProjectConfirmation> { { x => x.Project, project } };
+        var dialog = await DialogService.ShowAsync<DeleteProjectConfirmation>($"Delete {project?.Title}?", parameters);
+        var result = await dialog.Result;
 
-    void RowRightClicked(DataGridRowClickEventArgs<BlogPost> args) {
-        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+        if (!result.Canceled) {
+            await ProjectRepository.DeleteAsync(projectId);
+        }
     }
 }

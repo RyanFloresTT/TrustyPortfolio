@@ -1,0 +1,40 @@
+﻿@page "/Admin/Projects/Create"
+@attribute [Authorize(Roles = "Admin")]
+
+<EditForm Model="@NewProject" OnValidSubmit="@HandleSubmit">
+  <MudText Typo="Typo.h2">Title:</MudText>
+  <MudInput Variant="Variant.Filled" @bind-Value="@NewProject.Title" />
+
+  <MudText Typo="Typo.h2">Content:</MudText>
+  <MudTextField Class="pb-16" @bind-Value="NewProject.Content" T="string" Label="Outlined" Variant="Variant.Outlined" Lines="50" />
+
+  <MudText Typo="Typo.h3">Description:</MudText>
+  <MudTextField @bind-Value="@NewProject.Description" Lines="5" Label="Short description of the post" />
+
+  <MudText Typo="Typo.h3">Featured Image URL:</MudText>
+  <MudTextField @bind-Value="@NewProject.FeaturedImageUrl" Label="URL of the featured image" />
+
+  <MudText Typo="Typo.h3">URL Handle:</MudText>
+  <MudTextField @bind-Value="@NewProject.UrlHandle" Label="Unique identifier for the URL" />
+  
+  <MudText Typo="Typo.h3">Publish Date:</MudText>
+  <MudDatePicker @bind-Value="@NewProject.PublishDate" Label="Date and time to publish" />
+
+    <MudText Typo="Typo.h3">Project URL:</MudText>
+    <MudTextField @bind-Value="@NewProject.ProjectUrl" Label="Repo URL" />
+
+    <MudText Typo="Typo.h3">Tags:</MudText>
+    <MudSelect MultiSelection="true" @bind-Value="@SelectedTag" @bind-SelectedValues="@SelectedTags" Label="Select Tags (optional)">
+        @foreach (var tag in Tags) {
+            <MudSelectItem Value="tag">@tag.Name</MudSelectItem>
+        }
+    </MudSelect>
+
+  <MudText Typo="Typo.h3">Visibility:</MudText>
+  <MudSwitch @bind-Value="@NewProject.Visible" Label="Make post publicly visible" Color="Color.Primary" />
+
+  <MudText Typo="Typo.h3">Featured:</MudText>
+  <MudSwitch @bind-Value="@NewProject.Featured" Label="Highlight post on homepage" Color="Color.Primary" />
+
+  <MudButton Class="mb-16" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Create Project</MudButton>
+</EditForm>

@@ -1,0 +1,45 @@
+﻿@page "/Admin/Blogs/Create"
+@attribute [Authorize(Roles = "Admin")]
+
+<EditForm Model="@NewBlogPost" OnValidSubmit="@HandleSubmit">
+  <MudText Typo="Typo.h2">Title:</MudText>
+  <MudInput Variant="Variant.Filled" @bind-Value="@NewBlogPost.Title" />
+
+  <MudText Typo="Typo.h2">Content:</MudText>
+  <MudTextField Class="pb-16" @bind-Value="NewBlogPost.Content" T="string" Label="Outlined" Variant="Variant.Outlined" Lines="50" />
+
+  <MudText Typo="Typo.h3">Description:</MudText>
+  <MudTextField @bind-Value="@NewBlogPost.Description" Lines="5" Label="Short description of the post" />
+
+  <MudText Typo="Typo.h3">Featured Image URL:</MudText>
+  <MudTextField @bind-Value="@NewBlogPost.FeaturedImageUrl" Label="URL of the featured image" />
+
+  <MudText Typo="Typo.h3">URL Handle:</MudText>
+  <MudTextField @bind-Value="@NewBlogPost.UrlHandle" Label="Unique identifier for the URL" />
+
+  <MudText Typo="Typo.h3">Publish Date:</MudText>
+  <MudDatePicker @bind-Value="@NewBlogPost.PublishDate" Label="Date and time to publish" />
+
+    <MudText Typo="Typo.h3">Project:</MudText>
+    <MudSelect @bind-Value="@NewBlogPost.Project" Label="Select a project (optional)">
+        @foreach (var project in Projects)
+        {
+            <MudSelectItem Value="@project">@project.Title</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudText Typo="Typo.h3">Tags:</MudText>
+    <MudSelect MultiSelection="true" @bind-Value="@SelectedTag" @bind-SelectedValues="@SelectedTags" Label="Select Tags (optional)">
+        @foreach (var tag in Tags) {
+            <MudSelectItem Value="tag">@tag.Name</MudSelectItem>
+        }
+    </MudSelect>
+
+  <MudText Typo="Typo.h3">Visibility:</MudText>
+  <MudSwitch @bind-Value="@NewBlogPost.Visible" Label="Make post publicly visible" Color="Color.Primary" />
+
+  <MudText Typo="Typo.h3">Featured:</MudText>
+  <MudSwitch @bind-Value="@NewBlogPost.Featured" Label="Highlight post on homepage" Color="Color.Primary" />
+
+  <MudButton Class="mb-16" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Create Post</MudButton>
+</EditForm>

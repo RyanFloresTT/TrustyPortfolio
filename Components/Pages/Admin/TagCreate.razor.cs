@@ -6,7 +6,7 @@ namespace TrustyPortfolio.Components.Pages.Admin {
     public partial class TagCreate {
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] ITagRepository TagRepository { get; set; }
-        public Tag? Tag { get; set; }
+        public Tag Tag { get; set; } = new(); 
 
         private async Task HandleSubmit() {
             try {
@@ -14,7 +14,6 @@ namespace TrustyPortfolio.Components.Pages.Admin {
                 NavigationManager.NavigateTo("/Admin/Tags/Edit");
             }
             catch (Exception ex) {
-                // Handle any errors during update (show error message)
             }
         }
 

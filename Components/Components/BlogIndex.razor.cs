@@ -12,17 +12,15 @@ namespace TrustyPortfolio.Components.Components {
         public BlogPost? BlogPost { get; set; }
         string projectUrlHandle;
 
-        protected override async Task OnInitializedAsync() {
-            await base.OnInitializedAsync();
+        protected override async Task OnParametersSetAsync() {
+            await base.OnParametersSetAsync();
             BlogPost = PortfolioData.Blogs.FirstOrDefault(x => x.UrlHandle == UrlHandle);
             if (BlogPost != null) {
                 projectUrlHandle = $"/Projects/{BlogPost.Project.UrlHandle}";
             }
         }
         protected override async Task OnAfterRenderAsync(bool firstRender) {
-            if (firstRender) {
-                await JS.InvokeVoidAsync("highlightAll");
-            }
+            await JS.InvokeVoidAsync("highlightAll");
         }
 
         private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()

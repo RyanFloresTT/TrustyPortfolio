@@ -9,9 +9,10 @@ namespace TrustyPortfolio.Components.Components {
         [Parameter] public string UrlHandle { get; set; }
         public Project? Project { get; set; }
 
-        protected override async Task OnInitializedAsync() {
-            await base.OnInitializedAsync();
+        protected override async Task OnParametersSetAsync() {
+            await base.OnParametersSetAsync();
             Project = PortfolioData.Projects.FirstOrDefault(x => x.UrlHandle == UrlHandle);
+
         }
 
         string GetBlogUrlHandle(string blogUrlHandle) => $"/Blogs/{blogUrlHandle}";

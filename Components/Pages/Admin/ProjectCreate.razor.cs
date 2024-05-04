@@ -1,54 +1,49 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using TrustyPortfolio.Models.Domain;
 using TrustyPortfolio.Repositories;
 
 namespace TrustyPortfolio.Components.Pages.Admin {
-    public partial class ProjectEditIndex {
+    public partial class ProjectCreate {
+        [CascadingParameter] PortfolioData PortfolioData { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] IProjectRepository ProjectRepository { get; set; }
-        [CascadingParameter] PortfolioData PortfolioData { get; set; }
-        [Parameter] public string UrlHandle {  get; set; }
-        public Project? Project { get; set; }
+        IList<IBrowserFile> files = new List<IBrowserFile>();
+
+        public Project NewProject { get; set; } = new();
         public List<Tag> Tags { get; set; }
         public Tag SelectedTag { get; set; } = new();
         public IEnumerable<Tag> SelectedTags { get; set; }
 
+
         protected override async Task OnParametersSetAsync() {
             await base.OnParametersSetAsync();
             if (PortfolioData != null) {
-                Project = PortfolioData.Projects.FirstOrDefault(x => x.UrlHandle == UrlHandle);
                 Tags = PortfolioData.Tags;
-            }
-            if (Project.Tags.Any()) {
-                SelectedTags = Project.Tags;
             }
         }
 
-        private async Task HandleSubmit() {
+        async Task HandleSubmit() {
             try {
                 if (SelectedTags.Any()) {
-                    Project.Tags = new List<Tag>(); 
+                    NewProject.Tags = new List<Tag>();
                     foreach (var tag in SelectedTags) {
                         if (tag != null) {
-                            Project.Tags.Add(tag);
+                            NewProject.Tags.Add(tag);
                         }
                     }
                 }
 
-                await ProjectRepository.UpdateAsync(Project);
+                NewProject.PublishDate = NewProject.PublishDate.ToUniversalTime();
+                await ProjectRepository.AddAsync(NewProject);
                 NavigationManager.NavigateTo("/Admin/Projects/Edit");
             }
             catch (Exception ex) {
-                // Handle any errors during update (show error message)
             }
         }
-        private string GetMultiSelectionText(List<string> selectedTags) {
-            if (SelectedTags.Any()) {
-                return string.Join(", ", SelectedTags.Select(x => x.Name));
-            } else {
-                return "No Tags Selected";
-            }
+        void UploadFile(IBrowserFile file) {
+            files.Add(file);
         }
-
     }
 }
