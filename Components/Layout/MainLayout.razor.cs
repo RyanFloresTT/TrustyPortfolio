@@ -52,12 +52,12 @@ namespace TrustyPortfolio.Components.Layout {
 
 
         async Task FetchDataAsync() {
-            var blogResult = await BlogRepository.GetAllAsync();
+            var blogResult = await BlogRepository.GetAllAsync("", "Publish Date", "Desc");
             PortfolioData.Blogs = blogResult.ToList();
             blogResult = await BlogRepository.GetFeaturedAsync();
             PortfolioData.FeaturedBlogs = blogResult.ToList();
             
-            var projectResult = await ProjectRepository.GetAllAsync();
+            var projectResult = await ProjectRepository.GetAllAsync("", "Publish Date", "Desc");
             PortfolioData.Projects = projectResult.ToList();
             projectResult = await ProjectRepository.GetFeaturedAsync();
             PortfolioData.FeaturedProjects = projectResult.ToList();
