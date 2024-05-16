@@ -3,7 +3,7 @@
 ## Features
 
 ### Admin Account
-This website uses a minimal API to direct me to a login page and ![Microsoft Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio) to manage my roles, claims, password hashing, authenticaion and authorization.
+This website uses a minimal API to direct me to a login page and [Microsoft Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio) to manage my roles, claims, password hashing, authenticaion and authorization.
 Technically anyone can go and create an account with this website, but there isn't any functionality you can do with it yet. Any new accounts are created with the default role. I added the "Admin" role to my account directly so it's the only one that has admin access.
 Through this, I'm given access to extra page options which allow me to add/edit my content.
 
@@ -12,7 +12,7 @@ Through this, I'm given access to extra page options which allow me to add/edit 
 ### Blazor
 
 My creation and edit pages are not stylish in the slightest, but they aren't for users and as long as I know what to do with them then it's fine :P . I will be making adjustments to it in the future though as I start to clean this project up.
-Because I'm using ![Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), and more specifically ![MudBlazor](https://mudblazor.com/docs/), I was able to easily drop in a `DataGrid` component which, after a little adjusting to make it work with my models, works perfectly! I had made some methods in my repositories to allow for filtering and sortng if I wanted to, but this component does it all for me client side which is really nice. I even had a method for filtering by name if I wanted to search as I typed into a searchbox, but again, this component does it all for my client side and it's super awesome!
+Because I'm using [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), and more specifically [MudBlazor](https://mudblazor.com/docs/), I was able to easily drop in a `DataGrid` component which, after a little adjusting to make it work with my models, works perfectly! I had made some methods in my repositories to allow for filtering and sortng if I wanted to, but this component does it all for me client side which is really nice. I even had a method for filtering by name if I wanted to search as I typed into a searchbox, but again, this component does it all for my client side and it's super awesome!
 
 ![Edit Blogs Page](https://res.cloudinary.com/djdtmbpce/image/upload/v1715878575/Screen_Shot_2024-05-16_at_9.56.05_AM_acy0c0.png)
 
