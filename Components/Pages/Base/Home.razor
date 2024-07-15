@@ -21,12 +21,28 @@
         </div>
     </div>
 </div>
+
+<MudContainer Class="d-flex flex-wrap justify-content-center align-items-center mb-12" MaxWidth="MaxWidth.ExtraLarge">
+    @if (!PortfolioData.FeaturedProjects.Any() && !PortfolioData.Projects.Any()) {
+        <MudProgressCircular Color="Color.Primary" Style="height:35%;width:35%;" Indeterminate="true" />
+    } else {
+        @foreach (var project in PortfolioData.FeaturedProjects) {
+            <MudItem lg="4" md="6" sm="12" Class="p-4">
+                <FeaturedProjectCard Project="project" />
+            </MudItem>
+        }
+    }
+</MudContainer>
+
+<!--
 <MudContainer Class="mt-16 mb-16 px-8" MaxWidth="MaxWidth.Medium">
     <FeaturedProjectsCarousel Projects="PortfolioData.FeaturedProjects" />
 </MudContainer>
 <MudContainer Class="mt-16 mb-16 px-8" MaxWidth="MaxWidth.Medium">
     <FeaturedBlogsCarousel Blogs="PortfolioData.FeaturedBlogs" />
 </MudContainer>
+-->
+
 <!--
 <MudContainer Class="mt-16 mb-16 px-8" MaxWidth="MaxWidth.Medium">
     <MudGrid Spacing="2">

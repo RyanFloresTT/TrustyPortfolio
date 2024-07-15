@@ -19,10 +19,11 @@ namespace TrustyPortfolio.Components.Layout {
 
         PortfolioData PortfolioData { get; set; } = new();
         public bool IsDarkMode { get; set; }
+        readonly string[] routes = ["/", "blogs", "projects", "about", "resume"];
 
-        string ToggledColor { 
+        string ToggledColor {
             get {
-                return IsDarkMode? $"color:{Colors.Blue.Lighten2};" : $"color:{Colors.Orange.Darken1};";
+                return IsDarkMode ? $"color:{Colors.Blue.Lighten2};" : $"color:{Colors.Orange.Darken1};";
             }
         }
 
@@ -56,7 +57,7 @@ namespace TrustyPortfolio.Components.Layout {
             PortfolioData.Blogs = blogResult.ToList();
             blogResult = await BlogRepository.GetFeaturedAsync();
             PortfolioData.FeaturedBlogs = blogResult.ToList();
-            
+
             var projectResult = await ProjectRepository.GetAllAsync("", "Publish Date", "Desc");
             PortfolioData.Projects = projectResult.ToList();
             projectResult = await ProjectRepository.GetFeaturedAsync();
@@ -95,6 +96,9 @@ namespace TrustyPortfolio.Components.Layout {
         }
         void Login() {
             NavigationManager.NavigateTo("/Account/Login");
+        }
+        void Handle_ActivePanelIndexChanged(int index) {
+            NavigationManager.NavigateTo($"{routes[index]}");
         }
     }
 }
