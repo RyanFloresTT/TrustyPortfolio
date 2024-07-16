@@ -20,8 +20,6 @@ namespace TrustyPortfolio.Components.Components {
             await JS.InvokeVoidAsync("highlightAll");
         }
 
-        string GetBlogUrlHandle(string blogUrlHandle) => $"/Blogs/{blogUrlHandle}";
-
         private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .UsePrism()

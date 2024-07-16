@@ -2,7 +2,7 @@
     <MudContainer Class="my-8 d-flex justify-content-center">
         <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
             @foreach (var tag in PortfolioData.Tags) {
-                <MudChip Text="@tag.Name" Variant="Variant.Text" Color="GetChipColor(tag.Id)">@tag.Name</MudChip>
+                <MudChip Text="@tag.Name" Variant="Variant.Text" Color="ChipUtil.GetChipColor(tag.Id)">@tag.Name</MudChip>
             }
         </MudChipSet>
     </MudContainer>

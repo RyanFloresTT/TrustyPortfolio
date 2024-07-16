@@ -20,7 +20,7 @@
                         <MudListItem IconColor="Color.Primary" Icon="@Icons.Material.Filled.Bookmark" Text="Blog Posts" InitiallyExpanded="false">
                             <NestedList>
                                 @foreach(var blog in Project.Blogs) {
-                                    <MudLink Href="@GetBlogUrlHandle(blog.UrlHandle)">
+                                    <MudLink Href="@BlogPostUtil.GetURLHandle(blog)">
                                         <MudListItem IconColor="Color.Secondary" Icon="@Icons.Material.Filled.Bookmark">
                                             @blog.Title
                                         </MudListItem>

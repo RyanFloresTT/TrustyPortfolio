@@ -50,8 +50,6 @@ namespace TrustyPortfolio.Components.Layout {
                 User = await UserManager.GetUserAsync(authstate.User);
             }
         }
-
-
         async Task FetchDataAsync() {
             var blogResult = await BlogRepository.GetAllAsync("", "Publish Date", "Desc");
             PortfolioData.Blogs = blogResult.ToList();
@@ -66,7 +64,6 @@ namespace TrustyPortfolio.Components.Layout {
             var tagResult = await TagRepository.GetAllAsync();
             PortfolioData.Tags = tagResult.ToList();
         }
-
         protected override void OnInitialized() {
             currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
             NavigationManager.LocationChanged += OnLocationChanged;
@@ -83,19 +80,12 @@ namespace TrustyPortfolio.Components.Layout {
             StateHasChanged();
             return Task.CompletedTask;
         }
-        public void Dispose() {
-            NavigationManager.LocationChanged -= OnLocationChanged;
-        }
-
         void DrawerToggle() {
             _drawerOpen = !_drawerOpen;
         }
         void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
             currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
             StateHasChanged();
-        }
-        void Login() {
-            NavigationManager.NavigateTo("/Account/Login");
         }
         void Handle_ActivePanelIndexChanged(int index) {
             NavigationManager.NavigateTo($"{routes[index]}");
