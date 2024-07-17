@@ -1,13 +1,11 @@
 ﻿<MudCard Elevation="15" Style="height: 500px; position: relative;">
     <MudCardMedia Image="@Project.FeaturedImageUrl" Height="300" />
     <MudCardContent>
-        <MudText Typo="Typo.h5">@Project.Title</MudText>
+        <MudText Typo="Typo.h5" Class="mb-4">@Project.Title</MudText>
+        <MudText Typo="Typo.body2">@Project.Description</MudText>
     </MudCardContent>
-    <MudCardActions Style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px;">
+    <MudCardActions Style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px;" Class="justify-content-between">
         <MudButton Href="@GetURLHandle()" Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
         <MudLink Target="_blank" Href="@Project.ProjectUrl"><MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" /></MudLink>
-        <MudTooltip Text="@Project.Description" Color="Color.Primary" Placement="Placement.Top">
-            <MudIcon Icon="@Icons.Material.Outlined.Info" style="position: absolute; bottom: 8; right: 8;" />
-        </MudTooltip>
     </MudCardActions>
 </MudCard>
