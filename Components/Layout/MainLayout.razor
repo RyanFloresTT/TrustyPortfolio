@@ -14,13 +14,21 @@
                 </Authorized>
             </AuthorizeView>
             <div class="d-flex justify-content-center flex-grow-1">
-                <MudTabs Rounded="true" Centered="true" Color="@Color.Dark" ActivePanelIndexChanged="Handle_ActivePanelIndexChanged">
-                    <MudTabPanel Text="Home" />
-                    <MudTabPanel Text="Blog" />
-                    <MudTabPanel Text="Projects" />
-                    <MudTabPanel Text="About" />
-                    <MudTabPanel Text="Resume" />
-                </MudTabs>
+                <div class="d-none d-md-block">
+                    <MudTabs Rounded="true" Centered="true" Color="@Color.Dark" ActivePanelIndexChanged="Handle_ActivePanelIndexChanged">
+                        <MudTabPanel Text="Home" />
+                        <MudTabPanel Text="Blog" />
+                        <MudTabPanel Text="Projects" />
+                        <MudTabPanel Text="About" />
+                        <MudTabPanel Text="Resume" />
+                    </MudTabs>
+                </div>
+                <div class="d-block d-md-none">
+                    <MudDrawer @bind-Open="_drawerOpen" Variant="DrawerVariant.Temporary" Anchor="Anchor.Top" Elevation="2">
+                        <NavMenu />
+                    </MudDrawer>
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                </div>
             </div>
             <div class="ml-auto">
                 <AuthorizeView>
@@ -34,15 +42,8 @@
                         </form>
                     </Authorized>
                 </AuthorizeView>
-                </div>
+            </div>
         </MudAppBar>
-        <AuthorizeView>
-            <Authorized>
-                <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-                    <NavMenu />
-                </MudDrawer>
-            </Authorized>
-        </AuthorizeView>
         <MudMainContent>
             <CascadingValue Value="PortfolioData">
                 @Body

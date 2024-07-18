@@ -1,4 +1,9 @@
 ﻿<MudNavMenu Dense="true" Rounded="true" Margin="Margin.Dense" Color="Color.Secondary" Class="pa-2">
+    <MudNavLink Match="NavLinkMatch.All" Href="/">Home</MudNavLink>
+    <MudNavLink Href="/blogs">Blogs</MudNavLink>
+    <MudNavLink Href="/projects">Projects</MudNavLink>
+    <MudNavLink Href="/about">About</MudNavLink>
+    <MudNavLink Href="/resume">Resume</MudNavLink>
     <AuthorizeView Roles="Admin">
         <MudNavGroup Title="Admin" Expanded="true">
             <MudNavGroup Title="Blogs">

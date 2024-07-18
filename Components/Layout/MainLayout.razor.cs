@@ -27,7 +27,7 @@ namespace TrustyPortfolio.Components.Layout {
             }
         }
 
-        bool _drawerOpen = true;
+        bool _drawerOpen = false;
         MudThemeProvider mudThemeProvider;
         string? currentUrl;
 

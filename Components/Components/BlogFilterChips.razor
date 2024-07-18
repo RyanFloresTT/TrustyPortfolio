@@ -18,7 +18,7 @@
                     <MudContainer Class="d-flex flex-wrap justify-content-center">
                         @foreach (var blogPost in PortfolioData.Blogs.Where(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)))) {
                             <MudItem lg="4" md="6" xs="12" Class="p-4">
-                                <BlogCard BlogPost="blogPost" />
+                                <FeaturedBlogCard BlogPost="blogPost" />
                             </MudItem>
                         }
                     </MudContainer>
@@ -27,7 +27,7 @@
         } else {
             @foreach (var blogPost in PortfolioData.Blogs.Where(x => x.Visible)) {
                 <MudItem lg="4" md="6" xs="12" Class="p-4">
-                    <BlogCard BlogPost="blogPost" />
+                    <FeaturedBlogCard BlogPost="blogPost" />
                 </MudItem>
             }
         }
