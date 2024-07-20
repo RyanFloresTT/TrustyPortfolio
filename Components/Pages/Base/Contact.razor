@@ -1,0 +1,40 @@
+﻿@page "/Contact"
+
+<MudContainer Class="container my-5">
+        
+    <MudContainer>
+        <MudText Class="py-4 text-center" Style="@($"color:#FFFFFF;")" Typo="Typo.h2">Let's Make Some Games!</MudText>
+        <MudContainer class="d-flex mb-3 justify-content-end">
+            <div class="align-content-center">
+                <a href="https://www.dropbox.com/scl/fi/vw9gdu4mqz2zbg6o8fp7s/Ryan-Flores-Software-Engineer.docx.pdf?rlkey=5v2un5r0mj1vulxl1phzr9wqq&st=evj2j2pa&dl=0" target="_blank" class="btn btn-primary">Download Resume</a>
+            </div>
+        </MudContainer>
+        <MudPaper>
+            <MudList>
+                <MudLink Href="mailto:rryanflorres@gmail.com">
+                    <MudListItem Text="rryanflorres@gmail.com" Icon="@Icons.Material.Filled.Email" />
+                </MudLink>
+                <MudDivider DividerType="DividerType.Inset" />
+                <MudLink Href="https://www.linkedin.com/in/ryan-flores-tt">
+                    <MudListItem Text="LinkedIn" Icon="@Icons.Custom.Brands.LinkedIn" />
+                </MudLink>
+                <MudDivider DividerType="DividerType.Inset" />
+                <MudLink Href="https://github.com/RyanFloresTT">
+                    <MudListItem Text="GitHub" Icon="@Icons.Custom.Brands.GitHub" />
+                </MudLink>
+                <MudDivider DividerType="DividerType.Inset" />
+                <MudLink Href="https://x.com/_TrustyTea">
+                    <MudListItem Text="X" Icon="@Icons.Custom.Brands.X" />
+                </MudLink>
+                <MudDivider DividerType="DividerType.Inset" />
+                <MudLink Href="@GetYouTubeURL()">
+                    <MudListItem Text="YouTube" Icon="@Icons.Custom.Brands.YouTube" />
+                </MudLink >
+            </MudList>
+        </MudPaper>
+    </MudContainer>
+</MudContainer>
+
+@code{
+    string GetYouTubeURL() => $"https://www.youtube.com/@trustytea3136";
+}

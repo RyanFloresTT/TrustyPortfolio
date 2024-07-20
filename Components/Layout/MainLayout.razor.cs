@@ -19,7 +19,7 @@ namespace TrustyPortfolio.Components.Layout {
 
         PortfolioData PortfolioData { get; set; } = new();
         public bool IsDarkMode { get; set; } = true;
-        readonly string[] routes = ["/", "blogs", "projects", "about", "resume"];
+        readonly string[] routes = ["/", "blogs", "projects", "about", "contact"];
 
         string ToggledColor {
             get {
