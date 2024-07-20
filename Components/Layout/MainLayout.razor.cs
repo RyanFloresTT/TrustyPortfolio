@@ -18,7 +18,7 @@ namespace TrustyPortfolio.Components.Layout {
         ApplicationUser User;
 
         PortfolioData PortfolioData { get; set; } = new();
-        public bool IsDarkMode { get; set; }
+        public bool IsDarkMode { get; set; } = true;
         readonly string[] routes = ["/", "blogs", "projects", "about", "resume"];
 
         string ToggledColor {
@@ -31,12 +31,13 @@ namespace TrustyPortfolio.Components.Layout {
         MudThemeProvider mudThemeProvider;
         string? currentUrl;
 
-        MudTheme MyCustomTheme = new() {
+        readonly MudTheme MyCustomTheme = new() {
             Typography = new() {
                 Default = new() {
-                    FontFamily = new[] { "Ubuntu" }
+                    FontFamily = ["Ubuntu"]
                 }
-            }
+            },
+            
         };
         protected override async Task OnInitializedAsync() {
             try {
@@ -76,7 +77,7 @@ namespace TrustyPortfolio.Components.Layout {
             }
         }
         Task OnSystemPreferenceChanged(bool newValue) {
-            IsDarkMode = newValue;
+            //IsDarkMode = newValue;
             StateHasChanged();
             return Task.CompletedTask;
         }
