@@ -39,7 +39,7 @@ namespace TrustyPortfolio.Components.Layout {
             },
             
         };
-        protected override async Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync() {
             try {
                 await FetchDataAsync();
             }

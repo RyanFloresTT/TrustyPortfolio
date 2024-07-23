@@ -20,7 +20,6 @@
                         <MudTabPanel Text="Blog" />
                         <MudTabPanel Text="Projects" />
                         <MudTabPanel Text="About" />
-                        <MudTabPanel Text="Contact" />
                     </MudTabs>
                 </div>
                 <div class="d-block d-md-none">
@@ -30,7 +29,7 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
                 </div>
             </div>
-            <div class="ml-auto">
+            <div class="ml-auto position-relative">
                 <AuthorizeView>
                     <Authorized>
                         <form action="Account/Logout" method="post">
