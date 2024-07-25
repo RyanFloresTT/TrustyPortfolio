@@ -14,17 +14,19 @@ namespace TrustyPortfolio.Components.Pages.Admin {
         public List<Project> Projects { get; set; }
         public Tag SelectedTag { get; set; } = new();
         public IEnumerable<Tag> SelectedTags { get; set; }
+        DateTime? blogDate;
 
         protected override async Task OnParametersSetAsync() {
+            await base.OnParametersSetAsync();
             if (PortfolioData != null) {
                 BlogPost = PortfolioData.Blogs.FirstOrDefault(x => x.UrlHandle == UrlHandle);
+                blogDate = BlogPost.PublishDate;
                 Tags = PortfolioData.Tags;
                 Projects = PortfolioData.Projects;
             }
             if (BlogPost.Tags.Any()) {
                 SelectedTags = BlogPost.Tags;
             }
-            await base.OnParametersSetAsync();
         }
         private async Task HandleSubmit() {
             try {
@@ -35,6 +37,10 @@ namespace TrustyPortfolio.Components.Pages.Admin {
                             BlogPost.Tags.Add(tag);
                         }
                     }
+                }
+                if (blogDate != null) {
+                    BlogPost.PublishDate = (DateTime)blogDate;
+                    BlogPost.PublishDate = BlogPost.PublishDate.ToUniversalTime();
                 }
                 await BlogPostRepository.UpdateAsync(BlogPost);
                 NavigationManager.NavigateTo("/Admin/Blogs/Edit");

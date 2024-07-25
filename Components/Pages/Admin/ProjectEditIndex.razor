@@ -18,7 +18,7 @@
     <MudTextField @bind-Value="@Project.UrlHandle" Label="Unique identifier for the URL" Text="@Project.UrlHandle"/>
 
     <MudText Typo="Typo.h3">Publish Date:</MudText>
-    <MudDatePicker @bind-Value="@Project.PublishDate" Label="Date and time to publish" Date="@Project.PublishDate" />
+    <MudDatePicker @bind-Date="projectDate" Label="Date and time to publish" />
 
     <MudText Typo="Typo.h3">Project URL:</MudText>
     <MudTextField @bind-Value="@Project.ProjectUrl" Label="Repo URL" Text="@Project.ProjectUrl"/>

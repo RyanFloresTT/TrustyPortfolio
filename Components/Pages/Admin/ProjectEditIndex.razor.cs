@@ -12,11 +12,13 @@ namespace TrustyPortfolio.Components.Pages.Admin {
         public List<Tag> Tags { get; set; }
         public Tag SelectedTag { get; set; } = new();
         public IEnumerable<Tag> SelectedTags { get; set; }
+        DateTime? projectDate;
 
         protected override async Task OnParametersSetAsync() {
             await base.OnParametersSetAsync();
             if (PortfolioData != null) {
                 Project = PortfolioData.Projects.FirstOrDefault(x => x.UrlHandle == UrlHandle);
+                projectDate = Project.PublishDate;
                 Tags = PortfolioData.Tags;
             }
             if (Project.Tags.Any()) {
@@ -34,9 +36,12 @@ namespace TrustyPortfolio.Components.Pages.Admin {
                         }
                     }
                 }
-
-                await ProjectRepository.UpdateAsync(Project);
+                if (projectDate != null) { 
+                    Project.PublishDate = (DateTime)projectDate;
+                    Project.PublishDate = Project.PublishDate.ToUniversalTime();
+                }
                 NavigationManager.NavigateTo("/Admin/Projects/Edit");
+                await ProjectRepository.UpdateAsync(Project);
             }
             catch (Exception ex) {
                 // Handle any errors during update (show error message)
