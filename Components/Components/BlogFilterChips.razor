@@ -1,5 +1,4 @@
-﻿<MudContainer>
-    <MudContainer Class="my-8 d-flex justify-content-center">
+﻿    <MudContainer Class="my-8 d-flex justify-content-center">
         <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
             @foreach (var tag in PortfolioData.Tags) {
                 <MudChip Text="@tag.Name" Variant="Variant.Text" Color="ChipUtil.GetChipColor(tag.Id)">@tag.Name</MudChip>
@@ -15,13 +14,11 @@
                         <MudText Align="Align.Center" Typo="Typo.h3">No blogs match the selected tags.</MudText>
                     </MudItem>
                 } else {
-                    <MudContainer Class="d-flex flex-wrap justify-content-center">
                         @foreach (var blogPost in PortfolioData.Blogs.Where(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)))) {
                             <MudItem lg="4" md="6" xs="12" Class="p-4">
                                 <FeaturedBlogCard BlogPost="blogPost" />
                             </MudItem>
                         }
-                    </MudContainer>
                 }
             }
         } else {
@@ -32,4 +29,3 @@
             }
         }
     </MudGrid>
-</MudContainer>

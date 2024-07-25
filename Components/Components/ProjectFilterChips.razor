@@ -15,13 +15,11 @@
                         <MudText Align="Align.Center" Typo="Typo.h3">No projects match the selected tags.</MudText>
                     </MudItem>
                 } else {
-                    <MudContainer Class="d-flex flex-wrap justify-content-center">
                         @foreach (var project in PortfolioData.Projects.Where(x => x.Visible && SelectedTags.All(tag => x.Tags.Contains(tag)))) {
                             <MudItem lg="4" md="6" xs="12" Class="p-4">
                                 <FeaturedProjectCard Project="project" />
                             </MudItem>
                         }
-                    </MudContainer>
                 }
             }
         } else {
