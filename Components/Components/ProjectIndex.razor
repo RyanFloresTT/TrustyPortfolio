@@ -13,7 +13,7 @@
         <MudContainer Class="my-12 d-flex justify-content-start">
             <MudText Typo="Typo.h4">@Project.PublishDate.ToLongDateString()</MudText>
         </MudContainer>
-        @if (Project.Blogs.Any()) {
+        @if (Project.Blogs.Where(x => x.Visible).Any()) {
             <MudContainer Class="mb-12">
                 <MudPaper>
                     <MudList Clickable="true">
