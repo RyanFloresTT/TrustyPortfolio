@@ -1,5 +1,6 @@
 ﻿@page "/Projects/{UrlHandle}"
 @using Markdig
+@using TrustyPortfolio.Utilities
 
 @if (Project == null) {
     <MudText Typo="Typo.h1">Searching For Blog Post...</MudText>
@@ -37,7 +38,7 @@
                 <MudContainer Class="pa-6">
                     <MudText Typo="Typo.body1">
                         @if (Project?.Content != null) {
-                            @((MarkupString)Markdown.ToHtml(Project.Content, MarkdownPipeline))
+                            @((MarkupString)Markdown.ToHtml(Project.Content, MarkdigConfig.MarkdownPipeline))
                         }
                     </MudText>
                 </MudContainer>

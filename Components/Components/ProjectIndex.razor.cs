@@ -1,6 +1,4 @@
-﻿using Markdig;
-using Markdig.Prism;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using TrustyPortfolio.Models.Domain;
 
@@ -19,11 +17,5 @@ namespace TrustyPortfolio.Components.Components {
         protected override async Task OnAfterRenderAsync(bool firstRender) {
             await JS.InvokeVoidAsync("highlightAll");
         }
-
-        private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .UsePrism()
-            .Build();
-
     }
 }
