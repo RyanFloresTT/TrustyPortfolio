@@ -1,5 +1,7 @@
 # TrustyPortfolio
 
+#### !! This is no longer my active portfolio site. This has been replaced by a Next.js template. I'm still proud of the work I put into this project, so I keep it here to showcase. !!
+
 ## Features
 
 ### Admin Account
