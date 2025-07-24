@@ -1,47 +1,79 @@
 # TrustyPortfolio
 
-#### !! This is no longer my active portfolio site. This has been replaced by a Next.js template. I'm still proud of the work I put into this project, so I keep it here to showcase. !!
+## Project Overview
 
-## Features
+**TrustyPortfolio** is a full-stack, database-driven portfolio and blog platform built with Blazor and MudBlazor. Designed and engineered entirely by me, it features a robust admin panel, dynamic content management, and a modern, responsive UI. This project demonstrates my ability to architect, implement, and optimize a real-world web application using modern .NET technologies.
 
-### Admin Account
-This website uses a minimal API to direct me to a login page and [Microsoft Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio) to manage my roles, claims, password hashing, authenticaion and authorization.
-Technically anyone can go and create an account with this website, but there isn't any functionality you can do with it yet. Any new accounts are created with the default role. I added the "Admin" role to my account directly so it's the only one that has admin access.
-Through this, I'm given access to extra page options which allow me to add/edit my content.
+---
+
+## Tech Stack
+
+- **Blazor Server** (ASP.NET Core 8)
+- **MudBlazor** (UI component library)
+- **Entity Framework Core** (PostgreSQL & SQL Server support)
+- **Microsoft Identity** (authentication, roles, claims, password hashing)
+- **Cloudinary** (image uploads)
+- **Markdig** (Markdown rendering with syntax highlighting)
+- **NUnit** (unit testing)
+
+---
+
+## Key Features
+
+- **Admin Dashboard**: Secure, role-based admin area for managing blog posts, projects, and tags. Only users with the "Admin" role can access content management features.
+    - _[Consider adding a screenshot of the admin dashboard overview, if not already present.]_
+- **Content Management**: Create, edit, and delete blog posts, projects, and tags with rich Markdown support and image uploads.
+    - _[Screenshots of the blog/project creation/editing forms would be great here.]_
+- **Modern UI & Theming**: Responsive design with MudBlazor, including custom themes, dark/light mode toggle (auto-detects system preference), and accessible navigation.
+    - _[Showcase dark/light mode toggle and responsive layout in screenshots.]_
+- **Advanced Filtering**: Users can filter blogs and projects by tags using interactive chip components. Featured content is highlighted on the homepage.
+    - _[Add a screenshot of the tag filtering in action for both blogs and projects.]_
+- **Performance Optimization**: All content is loaded and cached on startup, minimizing database queries and providing instant navigation between pages.
+- **Security**: Built-in authentication, authorization, and anti-forgery protection. Admin role is strictly enforced for all content management routes.
+- **Extensible Architecture**: Clean separation of concerns with repositories, view models, and domain models. Easily extendable for new features.
+
+---
+
+## Screenshots
 
 ![Admin Panel](https://res.cloudinary.com/djdtmbpce/image/upload/v1715878280/Screen_Shot_2024-05-16_at_9.51.10_AM_t6ngyp.png)
 
-### Blazor
-
-My creation and edit pages are not stylish in the slightest, but they aren't for users and as long as I know what to do with them then it's fine :P . I will be making adjustments to it in the future though as I start to clean this project up.
-Because I'm using [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), and more specifically [MudBlazor](https://mudblazor.com/docs/), I was able to easily drop in a `DataGrid` component which, after a little adjusting to make it work with my models, works perfectly! I had made some methods in my repositories to allow for filtering and sortng if I wanted to, but this component does it all for me client side which is really nice. I even had a method for filtering by name if I wanted to search as I typed into a searchbox, but again, this component does it all for my client side and it's super awesome!
-
 ![Edit Blogs Page](https://res.cloudinary.com/djdtmbpce/image/upload/v1715878575/Screen_Shot_2024-05-16_at_9.56.05_AM_acy0c0.png)
 
-MudBlazor has themes, which makes it super easy to customize what colors I want my site to be. Within these themes are DarkMode and LightMode themes, this made is incredibly easy to make a button to toggle between the two and using Blazor's `OnInitializedAsync()` method, I'm able to retrieve the user's system preference, and automatically set the site to it!
+---
 
-### Blog/Project/Tags
+## Architecture & Design Decisions
 
-Another really amazing thing from MudBlazor, is that I was able to build another fitlering system for my users with the `MudChips` component. Users can click on these chips and it will automatically filter out the page based on their selection.
-I built out Project and Blog cards differently so that I can add things like a project repo button if that project has one. I also have a different card for the featured version of these so that I could modify those in the way that I wanted. I'm not very good at front end development so things might not look the prettiest, but they are functional.
+- **Blazor + MudBlazor**: Chosen for rapid development of a modern, interactive UI with strong .NET integration.
+- **Caching**: On initial load, all content is fetched and stored in a `PortfolioData` class, reducing database round-trips and improving user experience.
+- **Repository Pattern**: All data access is abstracted via repositories, making the codebase maintainable and testable.
+- **Role-based Security**: Microsoft Identity is used for robust authentication and authorization, with strict separation between admin and regular users.
+- **Markdown & Syntax Highlighting**: Blog content supports Markdown with code highlighting for technical posts.
+- **Cloudinary Integration**: Images are uploaded and served via Cloudinary for performance and reliability.
 
-Once the application is loaded, I cache all my content for the site and package it into a class that holds data "PortfolioData" which has fields for each of my database queries. This is to prevent re-querying the database each time a user wants to look at something different which saves on performance for the site and me some money for my databases running.
-At first I wasn't doing this and I had some loading bars indicating that the page content was still loading, but I much prefer caching it all because now each page loads instantly. The only downfall to this, which shouldn't be too bad, is that if I publish any content while a user is on my website, they won't see it unless they refresh the page. It isn't that much of a problem, but it's at least something I'm aware of, but I don't think I'm planning on fixing it any time soon.
+---
 
+## What I Learned / Challenges Overcome
 
-## Future
+- Implemented secure, role-based admin features from scratch
+- Built a fully custom content management system (CMS) with Blazor
+- Designed a performant caching strategy for a dynamic site
+- Integrated third-party services (Cloudinary, Markdig, MudBlazor)
+- Developed a responsive, accessible UI with advanced filtering and theming
+- Gained deep experience with .NET, Blazor, and modern web best practices
 
-This project is one that I will be updating as I learn new things. There are a few bugs and minor styling issue that might need to be fixed but besdies that, in terms of what I want to add for features, I'm thinking of adding accounts for everyone so that they can
-- Add posts and projects to a "favorite" list that they can go back to
-- If they opt in, receive email notifications when I publish a new blog post or project
-- Comment on posts/projects
-- Customize their profile picture by choosing a default or uploading one for themselves
-- Share posts easily
+---
 
-Besides adding more functionality to accounts, I'd also like to add:
-- A Contact Me page where people can submit a message and I'd receive it through email
-- Though not a feature, I'd like to give my site some more flavor, it's very minimalistic
-- A "What I'm Working On" section
-- The ability to open a page to Edit the blog post/project reading it as an admin
+## Future Improvements
 
-If you have suggestions on what I should add let me know! :D
+- User accounts with favorites, notifications, comments, and profile customization
+- Contact form with email integration
+- More advanced analytics and admin insights
+- Enhanced UI/UX polish and animations
+- "What I'm Working On" and in-place editing for admins
+
+---
+
+## Legacy Note
+
+> **Note:** This is no longer my active portfolio site. It has been replaced by a Next.js template, but I keep this project here to showcase my .NET and Blazor skills. I'm proud of the engineering and design work that went into TrustyPortfolio!
