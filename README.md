@@ -21,13 +21,9 @@
 ## Key Features
 
 - **Admin Dashboard**: Secure, role-based admin area for managing blog posts, projects, and tags. Only users with the "Admin" role can access content management features.
-    - _[Consider adding a screenshot of the admin dashboard overview, if not already present.]_
 - **Content Management**: Create, edit, and delete blog posts, projects, and tags with rich Markdown support and image uploads.
-    - _[Screenshots of the blog/project creation/editing forms would be great here.]_
 - **Modern UI & Theming**: Responsive design with MudBlazor, including custom themes, dark/light mode toggle (auto-detects system preference), and accessible navigation.
-    - _[Showcase dark/light mode toggle and responsive layout in screenshots.]_
 - **Advanced Filtering**: Users can filter blogs and projects by tags using interactive chip components. Featured content is highlighted on the homepage.
-    - _[Add a screenshot of the tag filtering in action for both blogs and projects.]_
 - **Performance Optimization**: All content is loaded and cached on startup, minimizing database queries and providing instant navigation between pages.
 - **Security**: Built-in authentication, authorization, and anti-forgery protection. Admin role is strictly enforced for all content management routes.
 - **Extensible Architecture**: Clean separation of concerns with repositories, view models, and domain models. Easily extendable for new features.
